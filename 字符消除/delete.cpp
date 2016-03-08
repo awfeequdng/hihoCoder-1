@@ -40,7 +40,6 @@ int main()
     }
     for(auto s : str)
     {
-        cin >> s;
         int ans = 0;
         int len = s.size();
         int t;

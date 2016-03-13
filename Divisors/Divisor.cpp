@@ -1,31 +1,29 @@
-#include <iostream>
+#include<cmath>
+#include<iostream>
 using namespace std;
-int count(int a)
+typedef long long ll;
+
+long prime[] = {2 ,3 ,5 ,7 ,11 ,13 ,17 ,19 ,23 ,29 ,31 ,37 ,41};
+ll result, n, maxDivisors;
+void dfs(long t, ll now, ll divisors, ll lastNi)
 {
-    int temp = 0;
-    for(int i = 1; i <= a; ++i)
+    if(divisors > maxDivisors || (divisors == maxDivisors && now < result))
     {
-        if(a % i == 0)
-            temp++;
+        maxDivisors = divisors;
+        result = now;
     }
-    return temp;
+    int i = 1;
+    while(now * pow(prime[t], i) < n && i <= lastNi)
+    {
+        dfs(t + 1, now * pow(prime[t], i), divisors * (i+1), i);
+        i = i + 1;
+    }
 }
 int main()
 {
-    int n;
-    while(cin >> n)
-    {
-        int temp = 0;
-        int res = 0;
-        for(int i = 1; i <= n; ++i)
-        {
-            if(count(i) > temp)
-            {
-                temp = count(i);
-                res = i;
-            }
-        }
-        cout << res << endl;
-    }
+    cin >> n;
+    maxDivisors = 0;
+    dfs(0, 1, 1, 100);
+    cout << result << endl;
     return 0;
 }

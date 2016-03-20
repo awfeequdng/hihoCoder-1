@@ -1,5 +1,7 @@
 时间限制:10000ms
+
 单点时限:1000ms
+
 内存限制:256MB
 #描述
 Steven loves swimming! The swimming pool he goes to every afternoon consists of N parallel lanes which are number from 0 to N-1. Steven plans to swim for R rounds. Each round he chooses a lane and swim to the other side, spending exactly L units of time.
@@ -34,16 +36,26 @@ For all testcases:
 1 <= N <= 103
 
 #输出
-The earliest time that Steven can finish his swimming plans.##样例输入
+The earliest time that Steven can finish his swimming plans.
+##样例输入
 2
+
 0 1 3 1 2
+
 1 1 0 0
+
 3 2 0 0
+
 1 1 2 2 4
+
 0 3 0 0
+
 3 3 0 0
+
 0 3 1 1
+
 3 3 1 1
 ##样例输出
 4
+
 4

@@ -9,7 +9,9 @@ There are n events in the parade. Each one can be performed for at most k times.
 
 The parade will last for m minutes. The major will give a talk at the end, so you should make at least one minute idle.
 
-Each events have three attributions, ai, bi, ci. If the parade have p minutes remaining when the i-th event begins, the excitement of the parade will increase by ai-(m-p)*bi and the event will last for ci minutes.
+Each events have three attributions, ai, bi, ci. If the parade have p minutes remaining when the i-th event begins, the excitement of the parade 
+
+will increase by ai-(m-p)*bi and the event will last for ci minutes.
 
 You should arrange the events to maximize excitement and guarantee at least one minute at the end will be free.
 

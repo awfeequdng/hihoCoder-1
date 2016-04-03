@@ -55,12 +55,18 @@ int main()
 using namespace std;
 int get_mod(int a, int b, int c)
 {
-    int res = 1;
-    while(b--)
+    long long res = 1;
+    long long temp = a;
+    while(b > 0)
     {
-        res = res * a % c;
+        if( b & 1)
+        {
+            res = (res * temp) % c;
+        }
+        temp = (temp * temp) % c;
+        b >>= 1;
     }
-    return res;
+    return static_cast<int> (res);
 }
 bool Miller_Rabin(int n)
 {

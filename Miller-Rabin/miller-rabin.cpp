@@ -75,7 +75,7 @@ bool Miller_Rabin(int n)
     if(n == 2 || n == 3)
         return true;
 
-    int u = n - 1;
+    long long u = n - 1;
     while(u % 2 == 0)
         u = u / 2;
     for(int i = 0; i < 5; ++i)

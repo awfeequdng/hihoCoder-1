@@ -1,269 +1,79 @@
 #include <iostream>
-#include <vector>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdlib>
 using namespace std;
-int get_mod(int a, int b, int c)
+typedef long long llong;
+//求取(x * y) % n
+llong mod(llong x, llong y,llong n)
 {
-    long long res = 1;
-    long long temp = a;
-    while(b > 0)
+    llong res = 0;
+    llong temp = x % n;
+    while(y)
     {
-        if( b & 1)
-        {
-            res = (res * temp) % c;
-        }
-        temp = (temp * temp) % c;
-        b >>= 1;
+        if(y & 0x1)
+            if((res += temp) > n)
+                res -= n;
+        if((temp <<= 1) >  n)
+            temp -= n;
+        y >>= 1;
     }
-    return static_cast<int> (res);
-}
-bool Miller_Rabin(int n)
-{
-    if (n < 2) 
-        return false;
-    if(n == 2 || n == 3)
-        return true;
-
-    for(int i = 0; i < 25; ++i)
-    {
-        int a = rand() % (n - 1) + 1;
-        int y = get_mod(a, n-1, n);
-        if(y != 1)
-            return false;
-        long long u = n - 1;
-        while(u % 2 == 0 && u > 1)
-        {
-            int x = get_mod(a, u, n);
-            if(x != 1 && x != n-1)
-                return false;
-            u = u / 2;
-        }
-    }
-    return true;
-}
-int main()
-{
-    int n;
-    cin >> n;
-    vector<int> nums;
-    int temp;
-    while(n--)
-    {
-        cin >> temp;
-        nums.push_back(temp);
-    }
-    for(const auto num : nums)
-    {
-        if(Miller_Rabin(num))
-            cout << "Yes" << endl;
-        else
-            cout << "No" << endl;
-    }
-    for(int i=0; i < 1000; ++i)
-    {
-        if(Miller_Rabin(i))
-            cout << i << " ";
-    }
-    cout << endl;
-    return 0;
-}
-    /*
-#include <iostream>
-#include <vector>
-#include <stdlib.h>
-#include <math.h>
-using namespace std;
-int get_mod(int a, int b, int c)
-{
-    long long res = 1;
-    long long temp = a;
-    while(b > 0)
-    {
-        if( b & 1)
-        {
-            res = (res * temp) % c;
-        }
-        temp = (temp * temp) % c;
-        b >>= 1;
-    }
-    return static_cast<int> (res);
-}
-bool Miller_Rabin(int n)
-{
-    if (n < 2) 
-        return false;
-    if(n == 2 || n == 3)
-        return true;
-
-    long long u = n - 1;
-    while(u % 2 == 0)
-        u = u / 2;
-    for(int i = 0; i < 5; ++i)
-    {
-        int a = rand() % (n - 2) + 2;
-        int y = get_mod(a, n-1, n);
-        if(y != 1)
-            return false;
-        int x = get_mod(a, u, n);
-        if(x == 1 || x == n-1)
-            continue;
-        for(int i = u; i < n; i *= 2)
-        {
-            x = x * x % n;
-            if(x == 1)
-                return false;
-            if(x == n-1)
-            {
-                break;
-                continue;
-            }
-            return false;
-
-        }
-    }
-    return true;
-}
-int main()
-{
-    int n;
-    cin >> n;
-    vector<int> nums;
-    int temp;
-    while(n--)
-    {
-        cin >> temp;
-        nums.push_back(temp);
-    }
-    for(const auto num : nums)
-    {
-        if(Miller_Rabin(num))
-            cout << "Yes" << endl;
-        else
-            cout << "No" << endl;
-    }
-    for(int i=0; i < 1000; ++i)
-    {
-        if(Miller_Rabin(i))
-            cout << i << " ";
-    }
-    cout << endl;
-    return 0;
-}
-*/
-/*#include <iostream>
-#include <vector>
-#include <stdlib.h>
-#include <math.h>
-using namespace std;
-typedef long long  llong;
-llong get_mod(llong a, llong b, llong c)
-{
-    llong res = 1;
-    while(b--)
-        res = res * a % c;
     return res;
 }
-bool Miller_Rabin(llong n)
+
+//求取(x ^ y) % n
+llong get_mod(llong x, llong y, llong n)
+{
+    llong res = 1;
+    llong temp = x;
+    while(y)
+    {
+        if(y & 0x1)
+            res = mod(res, temp, n);
+        temp = mod(temp, temp, n);
+        y >>= 1;
+    }
+    return res;
+}
+
+//编写bool函数，判定是否为素数
+bool is_prime(llong n, int t)
 {
     if(n < 2)
         return false;
-    if(n ==2 || n == 3)
+    if(n == 2)
         return true;
-    auto u = n - 1;
-    for(int i = 0; i < 5;  ++i)
+    if(!(n & 0x1))
+        return false;
+    llong k = 0, m, a, i;
+    for(m = n -1; !(m & 0x1); m >>= 1, ++k);
+    while(t--)
     {
-        llong a = rand() % (n-3) + 2;
-        if(get_mod(a, u, n) != 1)
-            return false;
-    } 
+        a = get_mod(rand() % (n - 2) + 2, m, n);
+        if(a != 1)
+        {
+            for(i = 0; i < k && a != n-1; ++i)
+            {
+                a = mod(a, a, n);
+            }
+            if(i >= k)
+                return false;
+        }
+    }
     return true;
 }
+
+//主函数
 int main()
 {
-    int n;
-    cin >> n;
-    vector<int> nums;
-    int temp;
-    while(n--)
+    int times;
+    llong num;
+    cin >> times;
+    while(times--)
     {
-        cin >> temp;
-        nums.push_back(temp);
-    }
-    for(const auto num : nums)
-    {
-        if(Miller_Rabin(num))
+        cin >> num;
+        if(is_prime(num, 1))
             cout << "Yes" << endl;
         else
             cout << "No" << endl;
     }
     return 0;
-}*/
-
-/*
-#include <iostream>
-#include <vector>
-#include <stdlib.h>
-#include <math.h>
-using namespace std;
-int get_mod(int a, int b, int c)
-{
-    long long res = 1;
-    long long temp = a;
-    while(b > 0)
-    {
-        if( b & 1)
-        {
-            res = (res * temp) % c;
-        }
-        temp = (temp * temp) % c;
-        b >>= 1;
-    }
-    return static_cast<int> (res);
 }
-bool Miller_Rabin(int n)
-{
-    if (n < 2) 
-        return false;
-    if(n == 2 || n == 3)
-        return true;
-
-    long long u = n - 1;
-    while(u % 2 == 0)
-        u = u / 2;
-    for(int i = 0; i < 5; ++i)
-    {
-        int a = rand() % (n - 2) + 2;
-        int x = get_mod(a, u, n);
-        while(u < n)
-        {
-            auto y = x * x % n;
-            if(y == 1 && x != 1 && x != n-1)
-                return false;
-            x = y;
-            u = u * 2;
-        }
-        if(x != 1)
-            return false;
-    }
-    return true;
-}
-int main()
-{
-    int n;
-    cin >> n;
-    vector<int> nums;
-    int temp;
-    while(n--)
-    {
-        cin >> temp;
-        nums.push_back(temp);
-    }
-    for(const auto num : nums)
-    {
-        if(Miller_Rabin(num))
-            cout << "Yes" << endl;
-        else
-            cout << "No" << endl;
-    }
-}*/

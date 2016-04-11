@@ -54,6 +54,7 @@ bool is_prime(llong n, int t)
             {
                 a = mod(a, a, n);
             }
+            //根据二次探测定理，只要不满足(a == 1) || (a == n - 1)，就会一直遍历下去，直到最后返回false
             if(i >= k)
                 return false;
         }

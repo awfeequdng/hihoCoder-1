@@ -10,7 +10,7 @@ int gcd(int a, int b)
 
 pair<int, int> extend_gcd(int a, int b)
 {
-    if(a % b)
+    if(gcd(a, b) == b)
         return make_pair(0, 1);
     pair<int, int> p = extend_gcd(b, a % b);
     pair<int, int> res;
@@ -42,6 +42,6 @@ int main()
 {
     int s1, s2, v1, v2, m;
     cin >> s1 >> s2 >> v1 >> v2 >> m;
-    cout << solve(s1, s2, v1, v2, m) << endl;
+    cout << solve(s1+1, s2+1, v1, v2, m) << endl;
     return 0;
 }

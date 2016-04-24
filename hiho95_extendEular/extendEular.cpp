@@ -18,12 +18,30 @@ pair<int, int> extend_gcd(int a, int b)
     res.second = p.first - (a / b) * p.second;
     return res;
 }
+int solve(int s1, int s2, int v1, int v2, int m)
+{
+    int a = v1 - v2;
+    int b = m;
+    int c = s2 - s1;
+    if(a < 0)
+        a = a + m;
+    int d = gcd(a, b);
+    if(c % d)
+        return -1;
+    a = a / d;
+    b = b / d;
+    c = c / d;
+    auto res = extend_gcd(a, b);
+    res.first = (res.first * c) % b;
+    while(res.first < 0)
+        res.first += b;
+    return res.first;
+}
+
 int main()
 {
-    int a, b;
-    while(cin >> a >> b)
-    {
-        cout << gcd(a, b) << endl;
-    }
+    int s1, s2, v1, v2, m;
+    cin >> s1 >> s2 >> v1 >> v2 >> m;
+    cout << solve(s1, s2, v1, v2, m) << endl;
     return 0;
 }

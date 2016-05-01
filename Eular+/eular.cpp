@@ -1,44 +1,50 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 int main()
 {
-    bool flag[5000000] = {true};
-    int state[5000000] = {0};
-    int phi[5000000];
+    int l = 0;
+    int r = 0;
+    cin >> l >> r;
+    vector<bool> flag(r+1, true);
+    vector<int> prime;
+    vector<int> func(r+1, r);
+    int i, j;
     int count = 0;
-    int i;
-    int num;
-    cin >> num;
-    for(i = 2; i <= num; ++i)
+    for(i = 2; i <= r; ++i)
     {
         if(flag[i])
         {
             count++;
-            state[count] = i;
-            phi[i] = i - 1;
+            prime.push_back(i);
+            func[i] = i - 1;
         }
-        for(int j = 1; i <= count; ++j)
+        for(j = 0; j < count; ++j)
         {
-            if(i * state[j] > num)
+            if(i * prime[j] > r)
                 break;
-            flag[i * state[j]] = false;
-            if(i % state[j] == 0)
+            flag[i * prime[j]] = false;
+            if(i % prime[j] == 0)
             {
-                phi[i * state[j]] = phi[i] * state[j];
+                func[i * prime[j]] = func[i] * prime[j];
                 break;
             }
             else
             {
-                phi[i * state[j]] = phi[i] * (state[j] - 1);
+                func[i * prime[j]] = func[i] * (prime[j] - 1);
             }
         }
     }
-    int min = 5000000;
-    for(i = 2; i <= num; ++i)
+    int min = r;
+    int index = 0;
+    for(i = r-1; i >= l; --i)
     {
-        if(phi[i] < min)
-            min = phi[i];
+        if(func[i] <= min)
+        {
+            min = func[i];
+            index = i;
+        }
     }
-    cout << min << endl;
+    cout << index << endl;
     return 0;
 }

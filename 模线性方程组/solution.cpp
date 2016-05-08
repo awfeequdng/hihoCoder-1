@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-typedef long long llong;
+typedef long  llong;
 using namespace std;
 int gcd(llong a, llong b)
 {
@@ -32,7 +32,7 @@ int main()
     {
         cin >> a >> b;
         m.push_back(a);
-        r.push_back(r);
+        r.push_back(b);
     }
     int M = m[0];
     int R = r[0];
@@ -40,12 +40,12 @@ int main()
     {
         auto d = gcd(M, m[i]);
         auto c = r[i] - R;
-        if(c mod d)
+        if(c % d)
             return -1;
         auto k = extend_gcd(M / d, m[i] / d);
-        k.first = (c / d * k.first) mod (m[i] / d);
+        k.first = (c / d * k.first) % (m[i] / d);
         R = R + k.first * M;
-        M = M / d * m[1];
+        M = M / d * m[i];
         R %= M;
     }
     if(R < 0)

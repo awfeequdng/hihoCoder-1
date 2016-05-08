@@ -2,9 +2,9 @@
 #include <vector>
 typedef long  llong;
 using namespace std;
-int gcd(llong a, llong b)
+long gcd(llong a, llong b)
 {
-    if(a % b == 0)
+    if(a % b == 0)  
         return b;
     else
         return gcd(b, a % b);
@@ -23,19 +23,19 @@ pair<llong, llong> extend_gcd(llong a, llong b)
 
 int main()
 {
-    int num;
+    long num;
     cin >> num;
-    vector<int> m;
-    vector<int> r;
-    int a, b;
+    vector<long> m;
+    vector<long> r;
+    long a, b;
     for(int i = 0; i < num; ++i)
     {
         cin >> a >> b;
         m.push_back(a);
         r.push_back(b);
     }
-    int M = m[0];
-    int R = r[0];
+    auto M = m[0];
+    auto R = r[0];
     for(int i = 1; i < num; ++i)
     {
         auto d = gcd(M, m[i]);

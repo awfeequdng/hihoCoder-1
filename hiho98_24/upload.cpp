@@ -8,9 +8,10 @@ using namespace std;
 
 //0 +; 1 -; 2 *; 3 /; 4 反-; 5 反/
 bool used[4] = {false};
-double nowNumber[4] = {0, 0, 0, 0};
-int ops[3] = {0, 0, 0};
-double number[4];
+double nowNumber[4] = {0};
+int ops[3] = {0};
+double number[4] = {0};
+int down = 1;
 
 bool makeOperation(int depth);
 
@@ -69,9 +70,13 @@ bool makeOperation(int depth)
 {
     if(depth >= 3)
     {
-        if(calcType1(nowNumber, ops) == 24)
+        auto temp1 = calcType1(nowNumber, ops);
+        auto temp2 = calcType2(nowNumber, ops);
+        if(temp1 == 24)
+        {
             return true;
-        if(calcType2(nowNumber, ops) == 24)
+        }
+        if(temp2 == 24)
             return true;
         return false;
     }
@@ -96,10 +101,10 @@ int main()
             cin >> temp;
             number[i] = temp;
         }
-    if(makeNumber(0))
-        cout << "Yes" << endl;
-    else
-        cout << "No" << endl;
+        if(makeNumber(0))
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
     return 0;
 }

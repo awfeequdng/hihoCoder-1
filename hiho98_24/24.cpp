@@ -28,12 +28,18 @@ int cal(int a, int b, int opt)
             return a * b;
             break;
         case 3:
+            if(b == 0)
+            {
+                break;
+            }
             return a / b;
             break;
         case 4:
             return b - a;
             break;
         case 5:
+            if(a == 0)
+                break;
             return b / a;
             break;
     }

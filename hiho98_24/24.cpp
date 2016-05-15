@@ -11,6 +11,35 @@ bool used[4] = false;
 int nowNumber[] = {0, 0, 0, 0};
 int ops[3] = {0, 0, 0};
 
+int cal(int a, int b, int opt)
+{
+    switch(opt)
+    {
+        case 1:
+            return a + b;
+        case 2:
+            return a - b;
+        case 3:
+            return a * b;
+        case 4:
+            return a / b;
+        case 5:
+            return b - a;
+        case 6:
+            return b / a;
+    }
+}
+
+int calcType1(int *n. int *ops)
+{
+    return cal(cal(cal(n[0], n[1], ops[0]), n[2], ops[1]), n[3], ops[2]);
+}
+
+int calcType2(int *n, int *ops)
+{
+    return cal(cal(n[0], n[1], ops[0]), cal(n[2], n[3], ops[2]), ops[1]);
+}
+
 bool makeNumber(int depth)
 {
     if(depth >= 4)
@@ -58,4 +87,11 @@ int main()
         cin >> temp;
         number.push_back(temp);
     }
+
+    if(makeNumber(0))
+        cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
+
+    return 0;
 }

@@ -2,9 +2,10 @@
 #include <vector>
 using namespace std;
 
+char pos[6];
+
 int main()
 {
-    char pos[6];
     int num, count;
     cin >> num;
     while(num--)
@@ -15,7 +16,6 @@ int main()
             cin >> temp;
             position += temp;
         }
-        cout << position << endl;
         count = 0;
         for(auto const x : position)
         {
@@ -26,9 +26,6 @@ int main()
             else
                 continue;
         }
-        for(const auto x : pos)
-            cout << x;
-        cout << endl;
     }
     return 0;
 }

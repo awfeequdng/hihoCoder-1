@@ -12,8 +12,7 @@ struct point
     void set_xy(int x, int y) { this->x = x; this->y = y;}
 };
 
-//存储状态值，未遍历位置置为false
-int step[3][8][8];
+int step[3][8][8] = {-1};
 
 
 point move(point p, int i)

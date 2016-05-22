@@ -22,7 +22,7 @@ point move(point current, int i)
 			next.setXY(current.x - 1, current.y + 2);
 			break;
 		case 1:
-			next.setXY(current.x+1, current.y + 2);
+			next.setXY(current.x + 1, current.y + 2);
 			break;
 		case 2:
 			next.setXY(current.x + 2, current.y + 1);
@@ -64,7 +64,7 @@ void bfs_solve(int f[8][8], int x, int y)
  	}
 
 	f[x][y] = 0;
-	stack<point>queue;
+	stack<point> queue;
 	point p(x, y);
 	queue.push(p);
 	while (!queue.empty())

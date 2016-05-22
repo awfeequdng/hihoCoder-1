@@ -117,6 +117,8 @@ int main()
         bfs_solve(step[1], get_x(b[0]), get_y(b[1]));
         bfs_solve(step[2], get_x(c[0]), get_y(c[1]));
 
+        //测试用例
+        /*
         for(int i = 0; i < 8; ++i)
         {
             for(int j = 0; j < 8; ++j)
@@ -125,6 +127,8 @@ int main()
             }
             cout << endl;
         }
+        */
+
         int ans = 65535;
         for(int i = 0; i < 8; ++i)
         {

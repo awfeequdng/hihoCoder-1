@@ -91,7 +91,7 @@ int get_x(char a)
 }
 int get_y(char a)
 {
-    return a - '0';
+    return a - '1';
 }
 
 int res(int x, int y)
@@ -117,6 +117,14 @@ int main()
         bfs_solve(step[1], get_x(b[0]), get_y(b[1]));
         bfs_solve(step[2], get_x(c[0]), get_y(c[1]));
 
+        for(int i = 0; i < 8; ++i)
+        {
+            for(int j = 0; j < 8; ++j)
+            {
+                cout << step[0][i][j] << " ";
+            }
+            cout << endl;
+        }
         int ans = 65535;
         for(int i = 0; i < 8; ++i)
         {

@@ -62,10 +62,10 @@ void bfs_solve(int f[8][8], int x, int y)
     {
         for(int j = 0; j < 8; ++j)
         {
-            f[i][j] = false;
+            f[i][j] = -1;
         }
     }
-
+    f[x][y] = 0;
     stack<point> queue;
     point p(x, y);
     queue.push(p);
@@ -77,7 +77,7 @@ void bfs_solve(int f[8][8], int x, int y)
         for(int i = 0; i < 8; ++i)
         {
             point next = move(p1, i);
-            if(isInChessBoard(next) && f[next.x][next.y])
+            if(isInChessBoard(next) && f[next.x][next.y] == -1)
             {
                 f[next.x][next.y] = f[p1.x][p1.y] + 1;
                 queue.push(next);

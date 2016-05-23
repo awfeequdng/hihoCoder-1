@@ -89,9 +89,9 @@ int get_x(char a)
 {
     return a - 'A';
 }
-int get_y(char a)
+int get_y(char b)
 {
-    return a - '1';
+    return b - '1';
 }
 
 int res(int x, int y)

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stack>
+#include <queue>
 #include <string>
 using namespace std;
 
@@ -65,13 +65,13 @@ void bfs_solve(int f[8][8], int x, int y)
         }
     }
     f[x][y] = 0;
-    stack<point> queue;
+    queue<point> q;
     point p(x, y);
-    queue.push(p);
-    while(!queue.empty())
+    q.push(p);
+    while(!q.empty())
     {
-        point p1 = queue.top();
-        queue.pop();
+        point p1 = q.front();
+        q.pop();
 
         for(int i = 0; i < 8; ++i)
         {
@@ -79,7 +79,7 @@ void bfs_solve(int f[8][8], int x, int y)
             if(isInChessBoard(next) && f[next.x][next.y] == -1)
             {
                 f[next.x][next.y] = f[p1.x][p1.y] + 1;
-                queue.push(next);
+                q.push(next);
             }
         }
     }

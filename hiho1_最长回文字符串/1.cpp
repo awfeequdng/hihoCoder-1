@@ -1,8 +1,8 @@
 #include <iostream>
-#include <vector>
+#include <string>
 using namespace std;
 
-int find(string ch)
+int find(char *ch)
 {
     int ans = 1;
     int i, p, n;
@@ -28,11 +28,12 @@ int find(string ch)
 int main()
 {
     int num;
-    string temp;
+    char temp[1000002];
+    temp[0] = '$';
     cin >> num;
     for(int i = 0; i < num; ++i)
     {
-       cin >> temp;
+       cin >> temp + 1;
        cout << find(temp) << endl;
     }
     return 0;

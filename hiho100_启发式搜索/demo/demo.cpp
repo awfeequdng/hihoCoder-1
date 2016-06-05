@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <queue>
+#include <stack>
 #include <algorithm>
 #include <iostream>
 using namespace std;

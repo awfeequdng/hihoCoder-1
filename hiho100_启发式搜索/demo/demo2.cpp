@@ -80,7 +80,7 @@ int dis(int p[3][3])
 				continue;
 			int x = (p[i][j] - 1) / 3;
 			int y = (p[i][j] - 1) % 3;
-			
+
 			ans += abs(x - i) + abs(y - j);
 		}
 	}

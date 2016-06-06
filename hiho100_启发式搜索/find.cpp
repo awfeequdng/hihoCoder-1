@@ -12,7 +12,7 @@ struct state //状态类
 {
     int val;
     int f, g, h;
-    state(int val_, int g_, int h_) : val(val_), g(g_), h(h_)
+    state(int val_ = 123456789, int g_ = 0, int h_ = 0) : val(val_), g(g_), h(h_)
     {
         f = g + h;
     }
@@ -53,22 +53,23 @@ int fact(int t) //阶乘函数
 int contor(int val) //康托展开
 {
     int n[9];
-    for(int i = 8; i <= 0; ++i)
+    int v = val;
+    for(int i = 8; i >= 0; ++i)
     {
-        n[i] = val % 10;
-        val /= 10;
+        n[i] = v % 10;
+        v /= 10;
     }
 
     int X = 0;
+    int a[9] = {0};
     for(int j = 0; j < 9; ++j)
     {
-        int count = 0;
         for(int k = j + 1; k < 9; ++k)
         {
             if(n[j] < n[k])
-                count++;
+                a[j]++;
         }
-        X += count * fact(9 - j);
+        X += a[j] * fact(8 - j);
     }
 
     return X;
@@ -161,6 +162,7 @@ int bfs(int start)
                             swap(board[i][j], board[x][y]);
                         }
                     }
+                    break;
                 }
             }
         }

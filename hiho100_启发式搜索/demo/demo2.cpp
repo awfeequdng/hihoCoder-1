@@ -139,7 +139,7 @@ int Astar_search(int start)
 						}
 					}
 
-					break;
+					//break;
 				}
 			}
 		}

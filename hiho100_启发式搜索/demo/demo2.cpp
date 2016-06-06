@@ -156,7 +156,9 @@ int main()
 
 	int t;
 	cin >> t;
-	while (t--) {
+	while (t--)
+    {
+
 		int board[9];
 		int val = 0;
 		for (int i = 0; i < 9; i++) {

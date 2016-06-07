@@ -187,6 +187,7 @@ int main()
             num[i] = temp;
             val = val * 10 + temp;
         }
+        cout << val << endl;
         int c = bfs(val);
         if(c == -1)
             cout << "No Solution!\n";

@@ -66,7 +66,7 @@ int contor(int val) //康托展开
     {
         for(int k = j + 1; k < 9; ++k)
         {
-            if(n[j] < n[k])
+            if(n[k] < n[j])
                 a[j]++;
         }
         X += a[j] * fact(8 - j);
@@ -127,12 +127,12 @@ int bfs(int start)
             continue;
         close[k] = s.g;
 
-        int v = s.val;
+        int v2 = s.val;
         for(int i = 2; i >= 0; --i)
         {
             for(int j = 2; j >= 0; --j)
             {
-                board[i][j] = v % 10;
+                board[i][j] = v2 % 10;
                 v /= 10;
             }
         }

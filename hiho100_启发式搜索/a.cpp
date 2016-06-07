@@ -50,7 +50,7 @@ struct state
     state(int val_ = 123456789, int g_ = 0, int h_ = 0) : val(val_), g(g_), h(h_) {f = g + h;}
     friend bool operator < (const state &left, const state &right)
     {
-        return left.val > right.val;
+        return left.f > right.f;
     }
 };
 
@@ -171,11 +171,11 @@ int main()
 {
     int num[9];
     int temp = 0;
-    int val;
     int n;
     cin >> n;
     while(n--)
     {
+        int val = 0;
         for(int i = 0; i < 9; ++i)
         {
             cin >> temp;

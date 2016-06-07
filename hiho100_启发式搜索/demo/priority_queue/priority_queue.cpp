@@ -43,8 +43,8 @@ int main()
     priority_queue test;
     test.push(3);
     test.push(2);
-    test.push(1);
-    test.push(0);
+    test.push(5);
+    test.push(6);
 
     while(!test.empty())
     {

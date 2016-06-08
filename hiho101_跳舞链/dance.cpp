@@ -2,19 +2,21 @@
 #include <stack>
 using namespace std;
 
-typedef struct node//node结构
+struct node//node结构
 {
-    int x, y;
-    struct node *left;
-    struct node *right;
-    struct node *up;
-    struct node *down;
+    node *left;
+    node *right;
+    node *up;
+    node *down;
+    int x;
+    int y;
     node(node *left_, node *right_, node *up_, node *down_, int x_, int y_) : left(left_), right(right_), up(up_), down(down_), x(x_), y(y_) {}
-}node;
+};
 
 void build()
 {
-    node *head(head, head, head, head, 0, 0);
+    node *head;
+    *head = node(head, head, head, head, 0, 0);
 }
 
 int main()

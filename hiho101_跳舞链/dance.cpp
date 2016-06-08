@@ -2,6 +2,21 @@
 #include <stack>
 using namespace std;
 
+typedef struct node//node结构
+{
+    int x, y;
+    struct node *left;
+    struct node *right;
+    struct node *up;
+    struct node *down;
+    node(node *left_, node *right_, node *up_, node *down_, int x_, int y_) : left(left_), right(right_), up(up_), down(down_), x(x_), y(y_) {}
+}node;
+
+void build()
+{
+    node *head(head, head, head, head, 0, 0);
+}
+
 int main()
 {
     int t;
@@ -18,10 +33,9 @@ int main()
             {
                 cin >> temp;
                 num[i][j] = temp;
-                cout << num[i][j] << " ";
             }
-            cout << endl;
         }
+        build();
     }
     return 0;
 }

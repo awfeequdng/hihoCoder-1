@@ -4,6 +4,7 @@
 using namespace std;
 
 int n, m;//全局变量，表示矩阵的行和列
+vector<pair<int, int>> state;
 
 struct node//node结构
 {
@@ -18,6 +19,9 @@ struct node//node结构
 
 void build(vector<pair<int, int>> s)
 {
+    for(const auto x : s)
+        cout << "(" << x.first << "," << " " << x.second << ")" << " ";
+    cout << endl;
     node *head;
     *head = node(head, head, head, head, 0, 0);
     node *columnHead[m];
@@ -38,6 +42,24 @@ void build(vector<pair<int, int>> s)
         pre->right = p;
         pre = p;
     }
+    int board[n][m];
+    int id[n][m];
+    for(int i = 0; i < n; ++i)
+        for(int j = 0; j < m; ++j)
+        {
+            board[i][j] = 0;
+            id[i][j] = -1;
+        }
+    for(const auto x : s)
+        board[x.first][x.second] = 1;
+    for(int i = 0; i < n; ++i)
+    {
+        for(int j = 0; j < m; ++j)
+        {
+            cout << board[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
 
 int main()
@@ -47,7 +69,7 @@ int main()
     cin >> t;
     while(t--)
     {
-        vector<pair<int, int>> state;
+        state.clear();
         cin >> n >> m;
         int num[n][m];
         for(int i = 0; i < n; ++i)
@@ -56,8 +78,11 @@ int main()
             {
                 cin >> temp;
                 num[i][j] = temp;
+                if(temp == 1)
+                    state.push_back(make_pair(i, j));
             }
         }
+        build(state);
     }
     return 0;
 }

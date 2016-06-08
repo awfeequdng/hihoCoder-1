@@ -2,7 +2,7 @@
 using namespace std;
 int m, n;
 
-void print()
+void print(int mn[][])
 {
     for(int i = 0; i < m; ++i)
     {
@@ -18,7 +18,7 @@ int main()
 {
     int temp;
     cin >> m >> n;
-    static int num[m][n];
+    int num[m][n];
     for(int i = 0; i < m; ++i)
     {
         for(int j = 0; j < n; ++j)
@@ -27,6 +27,6 @@ int main()
             num[i][j] = temp;
         }
     }
-    print();
+    print(num);
     return 0;
 }

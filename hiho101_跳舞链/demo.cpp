@@ -23,27 +23,8 @@ void build(vector<pair<int, int>> s)
     for(const auto x : s)
         cout << "(" << x.first << "," << " " << x.second << ")" << " ";
     cout << endl;
-    shared_ptr<node> head = make_shared<node>(head, head, head, head, 0, 0);
-    //node *head;
-    //*head = node(head, head, head, head, 0, 0);
-    shared_ptr<vector<node>> columnHead = make_shared<vector<node>>;
-    auto pre = head;
-    for(int i = 0; i < m; ++i)
-    {
-        auto p = columnHead[i];
-
-        p->up = p;
-        p->down = p;
-
-        p->x = 0;
-        p->y = i;
-
-        p->right = pre->right;
-        p->left = pre;
-        pre->right->left = p;
-        pre->right = p;
-        pre = p;
-    }
+    shared_ptr<node> head;
+    head = make_shared<node>(node(head, head, head, head, 0, 0));
     int board[n][m];
     int id[n][m];
     for(int i = 0; i < n; ++i)

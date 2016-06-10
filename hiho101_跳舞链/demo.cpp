@@ -4,7 +4,7 @@
 #include <memory>
 using namespace std;
 
-int n, m;//全局变量，表示矩阵的行和列
+int n, m;//全局变量，n表示矩阵的行，m表示矩阵的列
 vector<pair<int, int>> state;
 
 struct node//node结构

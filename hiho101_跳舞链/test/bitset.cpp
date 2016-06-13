@@ -11,5 +11,7 @@ int main()
         cout << x << endl;
     bitset<SIZE> col(1023);
     cout << col << endl;
+    for(int i = 0; i < SIZE; ++i)
+        cout << col[i] << endl;
     return 0;
 }

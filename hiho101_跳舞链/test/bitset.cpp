@@ -1,0 +1,15 @@
+#include <iostream>
+#include <bitset>
+using namespace std;
+
+#define SIZE 10
+
+int main()
+{
+    bitset<SIZE> rol[SIZE];
+    for(const auto x : rol)
+        cout << x << endl;
+    bitset<SIZE> col(1023);
+    cout << col << endl;
+    return 0;
+}

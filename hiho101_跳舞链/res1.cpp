@@ -2,10 +2,11 @@
 #include <bitset>
 #include <string>
 
-#define SIZE 10
+#define SIZE 105
 
 using namespace std;
 
+int n, m;
 bitset<SIZE> row[SIZE];
 bitset<SIZE> col[SIZE];
 bitset<SIZE> row_used;
@@ -22,11 +23,38 @@ void init()
     }
 }
 
+bool dfs(int index)
+{
+    if(col_covered.count() == m)
+        return true;
+    else if(row_used.count() == n)
+        return false;
 
+    bitset<SIZE> row_record = row_used;
+    bitset<SIZE> col_record = col_covered;
+    for(int i = index; i < n; ++i)
+    {
+        if(row_used[i] == 0)
+        {
+            for(int j = 0; j < m; ++j)
+            {
+                if(row[i][j] == 1)
+                    row_used |= col[j];
+            }
+
+            col_covered |= row[i];
+            if(dfs(i + 1))
+                return true;
+            row_used = row_record;
+            col_covered = col_record;
+        }
+    }
+    return false;
+}
 
 int main()
 {
-    int c, n, m, temp;
+    int c, temp;
     cin >> c;
     while(c--)
     {

@@ -45,7 +45,7 @@ bool dfs(int index)
             col_covered |= row[i];
             if(dfs(i + 1))
                 return true;
-            row_used = row_record;
+            row_used = row_record;//这个回溯太精髓了！
             col_covered = col_record;
         }
     }

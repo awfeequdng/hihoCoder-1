@@ -18,9 +18,10 @@ struct Node
 int n, m;
 int board[SIZE][SIZE];
 int id[SIZE][SIZE];
+int ans[SIZE];
 Node *head = NULL;
 Node *columnHead[SIZE];
-Node *node[SIZE];
+Node *node[SIZE * SIZE];
 
 void build()
 {
@@ -95,10 +96,85 @@ void build()
     }
 }
 
+void remove(int col)
+{
+    auto p = columnHead[col];
+    p->right->left = p->left;
+    p->left->right = p->right;
+    auto p2 = p->down;
+    while(p2 != p)
+    {
+        auto p3 = p2->right;
+        while(p3 != p2)
+        {
+            p3->down->up = p3->up;
+            p3->up->down = p3->down;
+            p3 = p3->right;
+        }
+        p2 = p2->down;
+    }
+}
+
+void resume(int col)
+{
+    auto p = columnHead[col];
+    p->right->left = p;
+    p->left->right = p;
+    auto p2 = p->down;
+    while(p2 != p)
+    {
+        auto p3 = p2->right;
+        while(p3 != p2)
+        {
+            p3->down->up = p3;
+            p3->up->down = p3;
+            p3 = p3->right;
+        }
+        p2 = p2->down;
+    }
+}
+
+bool dance(int depth)
+{
+    auto p = head->right;
+    if(p == head)
+        return true;
+
+    auto p2 = p->down;
+    if(p2 == p)
+        return false;
+
+    remove(p->y);
+
+    while(p2 != p)
+    {
+        ans[depth] = p2->x;
+
+        auto p3 = p2->right;
+        while(p3 != p2)
+        {
+            remove(p3->y);
+            p3 = p3->right;
+        }
+
+        if(dance(depth + 1))
+            return true;
+
+        p3 = p2->left;
+        while(p3 != p2)
+        {
+            resume(p3->y);
+            p3 = p3->left;
+        }
+
+        p2 = p2->down;
+    }
+    resume(p->y);
+    return false;
+}
+
 int main()
 {
     build();
-    for(const auto x : columnHead)
-        cout << x->y << endl;
     return 0;
 }

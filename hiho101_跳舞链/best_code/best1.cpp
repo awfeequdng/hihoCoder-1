@@ -13,13 +13,12 @@ bitset<MAXN>colrolList[MAXN];
 bitset<MAXN>colremain;
 bitset<MAXN>rolremain;
 
-bool Dfs(int index, int count)
+bool Dfs(int index)
 {
 	//if we have found the answer or there is no rol to choose
 	//return the result
 	if(colremain.count() == m)return true;
 	else if(rolremain.count() == n)return false;
-    else if(count >= 5) return false;
 	int i,j;
 	bitset<MAXN>recordrol;
 	bitset<MAXN>recordcol;
@@ -34,7 +33,7 @@ bool Dfs(int index, int count)
                 }
 			}
 			colremain |= rolcolList[i];
-			if(Dfs(i, ++count))return true;
+			if(Dfs(i + 1))return true;
 			rolremain = recordrol;
 			colremain = recordcol;
 		}
@@ -71,7 +70,7 @@ int main()
 				}
 			}
 		}
-		if(Dfs(1, 1))printf("Yes\n");
+		if(Dfs(1))printf("Yes\n");
 		else printf("No\n");
 	}
 	return 0;

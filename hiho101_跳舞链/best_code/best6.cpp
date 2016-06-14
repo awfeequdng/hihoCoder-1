@@ -36,9 +36,9 @@ void build() {
 // 	printf("build %d\n", logCount++);
     if (!head) head = new Node();
 	head->setProperties(head,head,head,head,0,0);
-	
+
 // 	printf("build %d\n", logCount++);
-	
+
 	Node* pre = head;
 	Node* p;
 	for(int i = 1;i<=m;i++) {
@@ -46,15 +46,15 @@ void build() {
 		p = columnHead[i];
 		p->up = p;
 		p->down = p;
-		
+
 		p->x = 0;
 		p->y = i;
-		
+
 		p->right = pre->right;
 		p->left = pre;
 		pre->right->left = p;
 		pre->right = p;
-		
+
 		pre = p;
 	}
 // 	printf("build %d\n", logCount++);
@@ -66,7 +66,7 @@ void build() {
 				id[i][j] = cnt;
 				if (!node[cnt]) node[cnt] = new Node();
 				node[cnt]->setProperties(node[cnt],node[cnt],node[cnt],node[cnt],i,j);
-			}  
+			}
 		}
 	}
 // 	printf("build %d\n", logCount++);
@@ -150,29 +150,29 @@ bool dance(int depth) {
 	if (p2 == p) {
 		return false;
 	}
-	
+
 	remove(p->y);
 	Node* p3 = NULL;
 	while (p2 != p) {
 		ans[ depth ] = p2->x;
-		
+
 		p3 = p2->right;
 		while (p3 != p2) {
 			remove(p3->y);
 			p3 = p3->right;
 		}
-		
+
 		// 递归下一步
 		if (dance(depth + 1)) {
 			return true;
 		}
-		
+
 		p3 = p2->left;
 		while (p3 != p2) {
 			resume(p3->y);
 			p3 = p3->left;
 		}
-		
+
 		p2 = p2->down;
 	}
 	resume(p->y);

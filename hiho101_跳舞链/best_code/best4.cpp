@@ -16,7 +16,7 @@ void init()
    memset(h,0,sizeof(h));
    memset(s,0,sizeof(s));
    lien=m;noden=m;
-   for (i=0;i<=lien;i++) 
+   for (i=0;i<=lien;i++)
    {
       l[i]=i-1;r[i]=i+1;
       u[i]=i;d[i]=i;

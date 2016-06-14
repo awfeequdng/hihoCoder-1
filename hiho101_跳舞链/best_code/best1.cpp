@@ -8,20 +8,18 @@
 using namespace std;
 
 int n,m;
-int count = 0;
 bitset<MAXN>rolcolList[MAXN];
 bitset<MAXN>colrolList[MAXN];
 bitset<MAXN>colremain;
 bitset<MAXN>rolremain;
 
-bool Dfs(int index)
+bool Dfs(int index, int count)
 {
-    count++;
 	//if we have found the answer or there is no rol to choose
 	//return the result
 	if(colremain.count() == m)return true;
 	else if(rolremain.count() == n)return false;
-    else if(count == 10) return false;
+    else if(count >= 5) return false;
 	int i,j;
 	bitset<MAXN>recordrol;
 	bitset<MAXN>recordcol;
@@ -33,12 +31,10 @@ bool Dfs(int index)
 			for(j=1;j<=m;j++){
 				if(rolcolList[i][j] == 1){
                     rolremain |= colrolList[j];
-                    cout << "rol" << rolremain << endl;
                 }
 			}
 			colremain |= rolcolList[i];
-            cout << "col" << colremain << endl;
-			if(Dfs(i))return true;
+			if(Dfs(i, ++count))return true;
 			rolremain = recordrol;
 			colremain = recordcol;
 		}
@@ -48,7 +44,6 @@ bool Dfs(int index)
 
 void Init()
 {
-    count = 0;
 	rolremain.reset();
 	colremain.reset();
 	int i;
@@ -76,7 +71,7 @@ int main()
 				}
 			}
 		}
-		if(Dfs(1))printf("Yes\n");
+		if(Dfs(1, 1))printf("Yes\n");
 		else printf("No\n");
 	}
 	return 0;

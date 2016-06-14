@@ -8,6 +8,7 @@
 using namespace std;
 
 int n,m;
+int count = 0;
 bitset<MAXN>rolcolList[MAXN];
 bitset<MAXN>colrolList[MAXN];
 bitset<MAXN>colremain;
@@ -15,10 +16,12 @@ bitset<MAXN>rolremain;
 
 bool Dfs(int index)
 {
+    count++;
 	//if we have found the answer or there is no rol to choose
 	//return the result
 	if(colremain.count() == m)return true;
 	else if(rolremain.count() == n)return false;
+    else if(count == 10) return false;
 	int i,j;
 	bitset<MAXN>recordrol;
 	bitset<MAXN>recordcol;
@@ -28,15 +31,13 @@ bool Dfs(int index)
 		//search for the available row
 		if(rolremain[i] == 0){
 			for(j=1;j<=m;j++){
-				if(rolcolList[i][j] == 1)rolremain |= colrolList[j];
+				if(rolcolList[i][j] == 1){
+                    rolremain |= colrolList[j];
+                    cout << "rol" << rolremain << endl;
+                }
 			}
-            //这里做了修改 尚未解决问题
-            auto a = colremain | rolcolList[i];
-            auto b = colremain ^ rolcolList[i];
-            if(a == b)
-			    colremain |= rolcolList[i];
-            else
-                continue;
+			colremain |= rolcolList[i];
+            cout << "col" << colremain << endl;
 			if(Dfs(i))return true;
 			rolremain = recordrol;
 			colremain = recordcol;
@@ -47,6 +48,7 @@ bool Dfs(int index)
 
 void Init()
 {
+    count = 0;
 	rolremain.reset();
 	colremain.reset();
 	int i;

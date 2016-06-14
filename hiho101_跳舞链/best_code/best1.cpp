@@ -30,7 +30,13 @@ bool Dfs(int index)
 			for(j=1;j<=m;j++){
 				if(rolcolList[i][j] == 1)rolremain |= colrolList[j];
 			}
-			colremain |= rolcolList[i];
+            //这里做了修改 尚未解决问题
+            auto a = colremain | rolcolList[i];
+            auto b = colremain ^ rolcolList[i];
+            if(a == b)
+			    colremain |= rolcolList[i];
+            else
+                continue;
 			if(Dfs(i))return true;
 			rolremain = recordrol;
 			colremain = recordcol;

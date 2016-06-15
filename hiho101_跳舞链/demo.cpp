@@ -41,7 +41,7 @@ void build()
         head = new Node(head, head, head, head, 0, 0);
     }
     auto pre = head;
-    for(int i = 0; i < m; ++i)
+    for(int i = 1; i <= m; ++i)
     {
         columnHead[i] = new Node();
         auto p = columnHead[i];

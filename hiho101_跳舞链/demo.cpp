@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <stack>
+#include <cstring>
 #define SIZE 105
 using namespace std;
 
@@ -22,6 +23,16 @@ int ans[SIZE];
 Node *head = NULL;
 Node *columnHead[SIZE];
 Node *node[SIZE * SIZE];
+
+/*
+void init()
+{
+    memset(board, 0, SIZE * SIZE);
+    memset(id, 0, SIZE * SIZE);
+    memset(columnHead, NULL, SIZE);
+    memset(node, NULL, SIZE * SIZE);
+}
+*/
 
 void build()
 {
@@ -175,6 +186,23 @@ bool dance(int depth)
 
 int main()
 {
-    build();
+    int num;
+    cin >> num;
+    while(num--)
+    {
+        cin >> n >> m;
+        for(int i = 1; i <= n; ++i)
+        {
+            for(int j = 1; j <= m; ++j)
+            {
+                cin >> board[i][j];
+            }
+        }
+        build();
+        if(dance(0))
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
+    }
     return 0;
 }

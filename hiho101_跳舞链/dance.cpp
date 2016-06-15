@@ -1,90 +1,225 @@
 #include <iostream>
-#include <stack>
-#include <vector>
 #include <memory>
+#include <stack>
+#include <cstring>
+#define SIZE 105
 using namespace std;
 
-int n, m;//全局变量，表示矩阵的行和列
-vector<pair<int, int>> state;
-
-struct node//node结构
+struct Node
 {
-    node *left;
-    node *right;
-    node *up;
-    node *down;
-    int x;
-    int y;
-    node(node *left_, node *right_, node *up_, node *down_, int x_, int y_) : left(left_), right(right_), up(up_), down(down_), x(x_), y(y_) {}
+    Node *left;
+    Node *right;
+    Node *up;
+    Node *down;
+    int x, y;
+    Node(){ }
+    Node(Node *left_, Node *right_, Node *up_, Node *down_, int x_, int y_) : left(left_), right(right_), up(up_), down(down_), x(x_), y(y_) { }
 };
 
-void build(vector<pair<int, int>> s)
+int n, m;
+int board[SIZE][SIZE];
+int id[SIZE][SIZE];
+int ans[SIZE];
+Node *head = NULL;//初始化为NULL
+Node *columnHead[SIZE];//构建列头结点
+Node *node[SIZE * SIZE];//构建结点矩阵
+
+
+void init()
 {
-    for(const auto x : s)
-        cout << "(" << x.first << "," << " " << x.second << ")" << " ";
-    cout << endl;
-    shared_ptr<node> *head();
-    //node *head;
-    *head = node(head, head, head, head, 0, 0);
-    shared_ptr<node> *columnHead[m];
-    auto pre = head;
-    for(int i = 0; i < m; ++i)
+    head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
+    memset(board, 0, SIZE * SIZE);
+    memset(id, 0, SIZE * SIZE);
+    for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
+        x = NULL;
+    for(auto x : node)
+        x = NULL;
+}
+
+void build()
+{
+    if(head == NULL)
     {
+        //这种写法是错误的！还没构建就使用。。。
+        //head = new Node(head, head, head, head, 0, 0);
+        //使用两步进行构建，这个非常重要
+        head = new Node();
+        *head = Node(head, head, head, head, 0, 0);
+    }
+    auto pre = head;
+    //构建列头结点
+    for(int i = 1; i <= m; ++i)
+    {
+        columnHead[i] = new Node();
         auto p = columnHead[i];
-
-        p->up = p;
-        p->down = p;
-
+        p->up = p->down = p;
         p->x = 0;
         p->y = i;
-
         p->right = pre->right;
         p->left = pre;
         pre->right->left = p;
         pre->right = p;
         pre = p;
     }
-    int board[n][m];
-    int id[n][m];
-    for(int i = 0; i < n; ++i)
-        for(int j = 0; j < m; ++j)
-        {
-            board[i][j] = 0;
-            id[i][j] = -1;
-        }
-    for(const auto x : s)
-        board[x.first][x.second] = 1;
-    for(int i = 0; i < n; ++i)
+    int count = 0;
+    //结点编号并初始化
+    for(int i = 1; i <= n; ++i)
     {
-        for(int j = 0; j < m; ++j)
+        for(int j = 1; j <= m; ++j)
         {
-            cout << board[i][j] << " ";
+            if(board[i][j] == 1)
+            {
+                count++;
+                id[i][j] = count;
+                node[count] = new Node();
+                *node[count] = Node(node[count], node[count], node[count], node[count], i, j);
+            }
         }
-        cout << endl;
     }
+    //纵向添加结点
+    for(int j = 1; j <= m; ++j)
+    {
+        auto pre = columnHead[j];
+        for(int i = 1; i <= n; ++i)
+        {
+            if(board[i][j] == 1)
+            {
+                auto p = node[id[i][j]];
+                p->down = pre->down;
+                p->up = pre;
+                pre->down->up = p;
+                pre->down = p;
+                pre = p;
+            }
+        }
+    }
+    //横向添加结点
+    for(int i = 1; i <=n; ++i)
+    {
+        pre = NULL;
+        for(int j = 1; j <= m; ++j)
+        {
+            if(board[i][j] == 1)
+            {
+                if(pre == NULL)
+                    pre = node[id[i][j]];
+                else
+                {
+                    auto p = node[id[i][j]];
+                    p->right = pre->right;
+                    p->left = pre;
+                    pre->right->left = p;
+                    pre->right = p;
+                    pre = p;
+                }
+            }
+        }
+    }
+}
+
+//移除列的函数
+void remove(int col)
+{
+    auto p = columnHead[col];
+    p->right->left = p->left;
+    p->left->right = p->right;
+    auto p2 = p->down;
+    while(p2 != p)
+    {
+        auto p3 = p2->right;
+        while(p3 != p2)
+        {
+            p3->down->up = p3->up;
+            p3->up->down = p3->down;
+            p3 = p3->right;
+        }
+        p2 = p2->down;
+    }
+}
+
+//恢复列的函数
+void resume(int col)
+{
+    auto p = columnHead[col];
+    p->right->left = p;
+    p->left->right = p;
+    auto p2 = p->down;
+    while(p2 != p)
+    {
+        auto p3 = p2->right;
+        while(p3 != p2)
+        {
+            p3->down->up = p3;
+            p3->up->down = p3;
+            p3 = p3->right;
+        }
+        p2 = p2->down;
+    }
+}
+
+//跳舞链深度搜索函数
+bool dance(int depth)
+{
+    auto p = head->right;
+    if(p == head)
+        return true;
+
+    auto p2 = p->down;
+    if(p2 == p)
+        return false;
+
+    remove(p->y);
+
+    while(p2 != p)
+    {
+        ans[depth] = p2->x;
+
+        auto p3 = p2->right;
+        while(p3 != p2)
+        {
+            remove(p3->y);
+            p3 = p3->right;
+        }
+
+        if(dance(depth + 1))
+            return true;
+
+        p3 = p2->left;
+        while(p3 != p2)
+        {
+            resume(p3->y);
+            p3 = p3->left;
+        }
+
+        p2 = p2->down;
+    }
+    resume(p->y);//所有更改全部回溯
+    return false;
 }
 
 int main()
 {
-    int t;
-    int temp;
-    cin >> t;
-    while(t--)
+    int num;
+    cin >> num;
+    while(num--)
     {
-        state.clear();
+        init();
         cin >> n >> m;
-        int num[n][m];
-        for(int i = 0; i < n; ++i)
+        for(int i = 1; i <= n; ++i)
         {
-            for(int j = 0; j < m; ++j)
+            for(int j = 1; j <= m; ++j)
             {
-                cin >> temp;
-                num[i][j] = temp;
-                if(temp == 1)
-                    state.push_back(make_pair(i, j));
+                cin >> board[i][j];
             }
         }
-        build(state);
+        build();
+        if(dance(0))
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
+        for(const auto x : ans)
+            cout << x << "  ";
+        cout << endl;
     }
     return 0;
 }

@@ -27,6 +27,7 @@ Node *node[SIZE * SIZE];
 
 void init()
 {
+    head = NULL;
     memset(board, 0, SIZE * SIZE);
     memset(id, 0, SIZE * SIZE);
     for(auto x : columnHead)

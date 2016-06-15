@@ -38,7 +38,8 @@ void build()
 {
     if(head == NULL)
     {
-        head = new Node(head, head, head, head, 0, 0);
+        head = new Node();
+        *head = Node(head, head, head, head, 0, 0);
     }
     auto pre = head;
     for(int i = 1; i <= m; ++i)
@@ -63,7 +64,8 @@ void build()
             {
                 count++;
                 id[i][j] = count;
-                node[count] = new Node(node[count], node[count], node[count], node[count], i, j);
+                node[count] = new Node();
+                *node[count] = Node(node[count], node[count], node[count], node[count], i, j);
             }
         }
     }

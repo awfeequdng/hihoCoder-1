@@ -38,6 +38,7 @@ void build()
 {
     if(head == NULL)
     {
+        //使用两步进行构建
         head = new Node();
         *head = Node(head, head, head, head, 0, 0);
     }
@@ -56,9 +57,9 @@ void build()
         pre = p;
     }
     int count = 0;
-    for(int i = 1; i < n; ++i)
+    for(int i = 1; i <= n; ++i)
     {
-        for(int j = 1; j < m; ++j)
+        for(int j = 1; j <= m; ++j)
         {
             if(board[i][j] == 1)
             {
@@ -69,10 +70,10 @@ void build()
             }
         }
     }
-    for(int j = 1; j < m; ++j)
+    for(int j = 1; j <= m; ++j)
     {
         auto pre = columnHead[j];
-        for(int i = 1; i < n; ++i)
+        for(int i = 1; i <= n; ++i)
         {
             if(board[i][j] == 1)
             {
@@ -86,10 +87,10 @@ void build()
         }
     }
 
-    for(int i = 1; i < n; ++i)
+    for(int i = 1; i <=n; ++i)
     {
         pre = NULL;
-        for(int j = 1; j < m; ++j)
+        for(int j = 1; j <= m; ++j)
         {
             if(board[i][j] == 1)
             {

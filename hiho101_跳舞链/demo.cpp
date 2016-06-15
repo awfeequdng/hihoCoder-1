@@ -24,15 +24,16 @@ Node *head = NULL;
 Node *columnHead[SIZE];
 Node *node[SIZE * SIZE];
 
-/*
+
 void init()
 {
     memset(board, 0, SIZE * SIZE);
     memset(id, 0, SIZE * SIZE);
-    memset(columnHead, NULL, SIZE);
-    memset(node, NULL, SIZE * SIZE);
+    for(auto x : columnHead)
+        x = NULL;
+    for(auto x : node)
+        x = NULL;
 }
-*/
 
 void build()
 {
@@ -193,6 +194,7 @@ int main()
     cin >> num;
     while(num--)
     {
+        init();
         cin >> n >> m;
         for(int i = 1; i <= n; ++i)
         {

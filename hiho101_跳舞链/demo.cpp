@@ -20,17 +20,17 @@ int n, m;
 int board[SIZE][SIZE];
 int id[SIZE][SIZE];
 int ans[SIZE];
-Node *head = NULL;
-Node *columnHead[SIZE];
-Node *node[SIZE * SIZE];
+Node *head = NULL;//初始化为NULL
+Node *columnHead[SIZE];//构建列头结点
+Node *node[SIZE * SIZE];//构建结点矩阵
 
 
 void init()
 {
-    head = NULL;
+    head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
     memset(board, 0, SIZE * SIZE);
     memset(id, 0, SIZE * SIZE);
-    for(auto x : columnHead)
+    for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
         x = NULL;
     for(auto x : node)
         x = NULL;
@@ -40,11 +40,14 @@ void build()
 {
     if(head == NULL)
     {
-        //使用两步进行构建
+        //这种写法是错误的！还没构建就使用。。。
+        //head = new Node(head, head, head, head, 0, 0);
+        //使用两步进行构建，这个非常重要
         head = new Node();
         *head = Node(head, head, head, head, 0, 0);
     }
     auto pre = head;
+    //构建列头结点
     for(int i = 1; i <= m; ++i)
     {
         columnHead[i] = new Node();
@@ -59,6 +62,7 @@ void build()
         pre = p;
     }
     int count = 0;
+    //结点编号并初始化
     for(int i = 1; i <= n; ++i)
     {
         for(int j = 1; j <= m; ++j)
@@ -72,6 +76,7 @@ void build()
             }
         }
     }
+    //纵向添加结点
     for(int j = 1; j <= m; ++j)
     {
         auto pre = columnHead[j];
@@ -88,7 +93,7 @@ void build()
             }
         }
     }
-
+    //横向添加结点
     for(int i = 1; i <=n; ++i)
     {
         pre = NULL;
@@ -112,6 +117,7 @@ void build()
     }
 }
 
+//移除列的函数
 void remove(int col)
 {
     auto p = columnHead[col];
@@ -131,6 +137,7 @@ void remove(int col)
     }
 }
 
+//恢复列的函数
 void resume(int col)
 {
     auto p = columnHead[col];
@@ -150,6 +157,7 @@ void resume(int col)
     }
 }
 
+//跳舞链深度搜索函数
 bool dance(int depth)
 {
     auto p = head->right;
@@ -185,7 +193,7 @@ bool dance(int depth)
 
         p2 = p2->down;
     }
-    resume(p->y);
+    resume(p->y);//所有更改全部回溯
     return false;
 }
 

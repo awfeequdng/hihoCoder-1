@@ -40,6 +40,8 @@ void init()
         x = NULL;
     for(auto x : node)
         x = NULL;
+    while(!prior.empty())
+        prior.pop();
 }
 
 void set(int i, int j, int k)
@@ -192,6 +194,22 @@ void resume(int col)
         }
         p2 = p2->down;
     }
+}
+
+Node* findMinCnt(Node *point)
+{
+    int min = 999;
+    int index = 0;
+    auto p = point->right;
+    while(p != point)
+    {
+        if(min >= cnt[p->y])
+        {
+            min = cnt[p->y];
+            index = p->y;
+        }
+    }
+    return columnHead[index];
 }
 
 //跳舞链深度搜索函数

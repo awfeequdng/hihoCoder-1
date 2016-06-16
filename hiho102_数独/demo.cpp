@@ -19,22 +19,22 @@ struct Node
 };
 
 int board[SIZE][SIZE];
-int matrix[n+1][m+1];
-int id[SIZE][SIZE];
-int ans[SIZE][m+1];
-int cnt[m+1];
+int matrix[n][m];
+int id[n][m];
+int ans[SIZE][SIZE];
+int cnt[m];
 Node *head = NULL;//初始化为NULL
-Node *columnHead[m + 1];//构建列头结点
-Node *node[(n+1)*(m+1)];//构建结点矩阵
+Node *columnHead[m];//构建列头结点
+Node *node[n * m];//构建结点矩阵
 
 
 void init()
 {
     head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
     memset(board, 0, SIZE * SIZE);
-    memset(id, 0, SIZE * SIZE);
-    memset(matrix, 0, 730 * 325);
-    memset(cnt, 0, m + 1);
+    memset(id, 0, n * m);
+    memset(matrix, 0, n * m);
+    memset(cnt, 0, m);
     for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
         x = NULL;
     for(auto x : node)
@@ -46,10 +46,10 @@ void set(int i, int j, int k)
     int id = i * 9 + j;
     int pid = id * 9 + k;
     matrix[pid][i * 9 + k] = 1;
-    matrix[pid][80 + j * 9 + k] = 1;
+    matrix[pid][81 + j * 9 + k] = 1;
     int t = (i / 3 * 3 + j / 3) + 1;
-    matrix[pid][161 + (t - 1) * 9  + k] = 1;
-    matrix[pid][242 + id] = 1;
+    matrix[pid][162 + (t - 1) * 9  + k] = 1;
+    matrix[pid][243 + id] = 1;
 }
 
 void create()
@@ -198,12 +198,14 @@ Node* findMinCnt(Node *point)
     auto p = point->right;
     while(p != point)
     {
-        if(min >= cnt[p->y])
+        if(min > cnt[p->y])
         {
             min = cnt[p->y];
             index = p->y;
         }
+        p = p->right; //这一步竟然忘了，粗心大意！！！
     }
+    cout << index << endl;
     return columnHead[index];
 }
 
@@ -261,15 +263,23 @@ int main()
                 cin >> board[i][j];
             }
         }
-        cout << "Enter successful!" << endl;
         create();
-        cout << "Create successful!" << endl;
         build();
-        cout << "Build successful!" << endl;
         if(dance(0))
             cout << "Yes" << endl;
         else
             cout << "No" << endl;
+        for(const auto x : cnt)
+            cout << x << " ";
+        cout << endl;
+        for(int i = 0; i < 9; ++i)
+        {
+            for(int j = 0; j < 9; ++j)
+            {
+                cout << ans[i][j] << " ";
+            }
+            cout << endl;
+        }
         return 0;
     }
 }

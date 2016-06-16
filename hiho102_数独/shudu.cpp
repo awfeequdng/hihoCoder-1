@@ -273,8 +273,6 @@ int main()
                 cout << endl;
             }
         }
-        else
-            cout << "No" << endl;
-        return 0;
     }
+    return 0;
 }

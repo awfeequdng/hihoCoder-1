@@ -196,7 +196,7 @@ Node* findMinCnt(Node *point)
     int min = 999;
     int index = 0;
     auto p = point->right;
-    while(p != point)
+    while(p != head)
     {
         if(min > cnt[p->y])
         {
@@ -213,7 +213,17 @@ Node* findMinCnt(Node *point)
 bool dance(int depth)
 {
     if(head->right == head)
+    {
+        for(int i = 0; i < 9; ++i)
+        {
+            for(int j = 0; j < 9; ++j)
+            {
+                cout << ans[i][j] << " ";
+            }
+            cout << endl;
+        }
         return true;
+    }
     auto p = findMinCnt(head);
     auto p2 = p->down;
     if(p2 == p)
@@ -269,17 +279,6 @@ int main()
             cout << "Yes" << endl;
         else
             cout << "No" << endl;
-        for(const auto x : cnt)
-            cout << x << " ";
-        cout << endl;
-        for(int i = 0; i < 9; ++i)
-        {
-            for(int j = 0; j < 9; ++j)
-            {
-                cout << ans[i][j] << " ";
-            }
-            cout << endl;
-        }
         return 0;
     }
 }

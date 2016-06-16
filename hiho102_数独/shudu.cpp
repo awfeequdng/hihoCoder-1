@@ -20,8 +20,8 @@ struct Node
 
 int board[SIZE][SIZE];
 int matrix[n+1][m+1];
-int id[SIZE][SIZE];
-int ans[SIZE][m+1];
+int id[n+1][m+1];
+int ans[SIZE][SIZE];
 int cnt[m+1];
 Node *head = NULL;//初始化为NULL
 Node *columnHead[m + 1];//构建列头结点
@@ -32,7 +32,7 @@ void init()
 {
     head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
     memset(board, 0, SIZE * SIZE);
-    memset(id, 0, SIZE * SIZE);
+    memset(id, 0, 730 * 325);
     memset(matrix, 0, 730 * 325);
     memset(cnt, 0, m + 1);
     for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
@@ -203,6 +203,7 @@ Node* findMinCnt(Node *point)
             min = cnt[p->y];
             index = p->y;
         }
+        p = p->right;
     }
     return columnHead[index];
 }
@@ -246,34 +247,6 @@ bool dance(int depth)
     return false;
 }
 
-/*
-int main()
-{
-    int num;
-    cin >> num;
-    while(num--)
-    {
-        init();
-        cin >> n >> m;
-        for(int i = 1; i <= n; ++i)
-        {
-            for(int j = 1; j <= m; ++j)
-            {
-                cin >> board[i][j];
-            }
-        }
-        build();
-        if(dance(0))
-            cout << "Yes" << endl;
-        else
-            cout << "No" << endl;
-        for(const auto x : ans)
-            cout << x << "  ";
-        cout << endl;
-    }
-    return 0;
-}
-*/
 
 int main()
 {
@@ -289,13 +262,17 @@ int main()
                 cin >> board[i][j];
             }
         }
-        cout << "Enter successful!" << endl;
         create();
-        cout << "Create successful!" << endl;
         build();
-        cout << "Build successful!" << endl;
         if(dance(0))
-            cout << "Yes" << endl;
+        {
+            for(int i = 1; i < 10; ++i)
+            {
+                for(int j = 1; j < 10; ++j)
+                    cout << ans[i][j] << " ";
+                cout << endl;
+            }
+        }
         else
             cout << "No" << endl;
         return 0;

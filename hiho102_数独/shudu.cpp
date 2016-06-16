@@ -198,7 +198,7 @@ Node* findMinCnt(Node *point)
     auto p = point->right;
     while(p != point)
     {
-        if(min >= cnt[p->y])
+        if(min > cnt[p->y])//这里需要注意的是，> 和　>=遍历的顺序是不一样的
         {
             min = cnt[p->y];
             index = p->y;

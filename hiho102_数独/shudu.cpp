@@ -18,11 +18,10 @@ struct Node
     Node(Node *left_, Node *right_, Node *up_, Node *down_, int x_, int y_) : left(left_), right(right_), up(up_), down(down_), x(x_), y(y_) { }
 };
 
-int n, m;
 int board[SIZE][SIZE];
 int matrix[n][m];
 int id[SIZE][SIZE];
-int ans[SIZE];
+int ans[SIZE][m];
 int cnt[m];
 Node *head = NULL;//初始化为NULL
 Node *columnHead[m];//构建列头结点
@@ -40,8 +39,6 @@ void init()
         x = NULL;
     for(auto x : node)
         x = NULL;
-    while(!prior.empty())
-        prior.pop();
 }
 
 void set(int i, int j, int k)
@@ -62,12 +59,10 @@ void create()
         for(int j = 1; j < 10; +j)
         {
             if(board[i][j] == 0)
-            {
                 for(int k = 1; k < 10;  ++k)
                     set(i, j, k);
-                else
-                    set(i, j, board[i][j]);
-            }
+            else
+                set(i, j, board[i][j]);
         }
     }
 }
@@ -251,6 +246,7 @@ bool dance(int depth)
     return false;
 }
 
+/*
 int main()
 {
     int num;
@@ -277,6 +273,7 @@ int main()
     }
     return 0;
 }
+*/
 
 int main()
 {
@@ -294,6 +291,10 @@ int main()
         }
         create();
         build();
+        if(dance(0))
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
         return 0;
     }
 }

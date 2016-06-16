@@ -2,7 +2,9 @@
 #include <memory>
 #include <stack>
 #include <cstring>
-#define SIZE 9
+#define SIZE 10
+#define n 730
+#define m 325
 using namespace std;
 
 struct Node
@@ -18,12 +20,13 @@ struct Node
 
 int n, m;
 int board[SIZE][SIZE];
-int matrix[729][324];
+int matrix[n][m];
 int id[SIZE][SIZE];
 int ans[SIZE];
+int cnt[m];
 Node *head = NULL;//初始化为NULL
-Node *columnHead[324];//构建列头结点
-Node *node[729 * 324];//构建结点矩阵
+Node *columnHead[m];//构建列头结点
+Node *node[n * m];//构建结点矩阵
 
 
 void init()
@@ -32,6 +35,7 @@ void init()
     memset(board, 0, SIZE * SIZE);
     memset(id, 0, SIZE * SIZE);
     memset(matrix, 0, 729 * 324);
+    memset(cnt, 0, m);
     for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
         x = NULL;
     for(auto x : node)
@@ -97,7 +101,7 @@ void build()
     {
         for(int j = 1; j <= m; ++j)
         {
-            if(board[i][j] == 1)
+            if(matrix[i][j] == 1)
             {
                 count++;
                 id[i][j] = count;
@@ -112,8 +116,9 @@ void build()
         auto pre = columnHead[j];
         for(int i = 1; i <= n; ++i)
         {
-            if(board[i][j] == 1)
+            if(matrix[i][j] == 1)
             {
+                cnt[j] += 1;
                 auto p = node[id[i][j]];
                 p->down = pre->down;
                 p->up = pre;
@@ -129,7 +134,7 @@ void build()
         pre = NULL;
         for(int j = 1; j <= m; ++j)
         {
-            if(board[i][j] == 1)
+            if(matrix[i][j] == 1)
             {
                 if(pre == NULL)
                     pre = node[id[i][j]];
@@ -161,6 +166,7 @@ void remove(int col)
         {
             p3->down->up = p3->up;
             p3->up->down = p3->down;
+            cnt[p3->y] -= 1;
             p3 = p3->right;
         }
         p2 = p2->down;
@@ -181,6 +187,7 @@ void resume(int col)
         {
             p3->down->up = p3;
             p3->up->down = p3;
+            cnt[p3->y] += 1;
             p3 = p3->right;
         }
         p2 = p2->down;
@@ -190,10 +197,9 @@ void resume(int col)
 //跳舞链深度搜索函数
 bool dance(int depth)
 {
-    auto p = head->right;
-    if(p == head)
+    if(head->right == head)
         return true;
-
+    auto p = findMinCnt(head);
     auto p2 = p->down;
     if(p2 == p)
         return false;
@@ -202,7 +208,7 @@ bool dance(int depth)
 
     while(p2 != p)
     {
-        ans[depth] = p2->x;
+        ans[(p2->x - 1)/81 +1][((p2->x - 1)/9) % 9 + 1] = (p2->x - 1) % 9 + 1;
 
         auto p3 = p2->right;
         while(p3 != p2)
@@ -252,4 +258,24 @@ int main()
         cout << endl;
     }
     return 0;
+}
+
+int main()
+{
+    int num;
+    cin >> num;
+    while(num--)
+    {
+        init();
+        for(int i = 1; i < 10; ++i)
+        {
+            for(int j = 1; j < 10; ++j)
+            {
+                cin >> board[i][j];
+            }
+        }
+        create();
+        build();
+        return 0;
+    }
 }

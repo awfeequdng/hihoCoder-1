@@ -1,9 +1,11 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
+/*
 class priority_queue
 {
     private:
@@ -38,9 +40,10 @@ class priority_queue
         }
 };
 
+*/
 int main()
 {
-    priority_queue test;
+    priority_queue<int> test;
     test.push(3);
     test.push(2);
     test.push(5);

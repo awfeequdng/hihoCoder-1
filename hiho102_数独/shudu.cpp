@@ -3,8 +3,8 @@
 #include <stack>
 #include <cstring>
 #define SIZE 10
-#define n 730
-#define m 325
+#define n 729
+#define m 324
 using namespace std;
 
 struct Node
@@ -19,13 +19,13 @@ struct Node
 };
 
 int board[SIZE][SIZE];
-int matrix[n][m];
+int matrix[n+1][m+1];
 int id[SIZE][SIZE];
-int ans[SIZE][m];
-int cnt[m];
+int ans[SIZE][m+1];
+int cnt[m+1];
 Node *head = NULL;//初始化为NULL
-Node *columnHead[m];//构建列头结点
-Node *node[n * m];//构建结点矩阵
+Node *columnHead[m + 1];//构建列头结点
+Node *node[(n+1)*(m+1)];//构建结点矩阵
 
 
 void init()
@@ -33,8 +33,8 @@ void init()
     head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
     memset(board, 0, SIZE * SIZE);
     memset(id, 0, SIZE * SIZE);
-    memset(matrix, 0, 729 * 324);
-    memset(cnt, 0, m);
+    memset(matrix, 0, 730 * 325);
+    memset(cnt, 0, m + 1);
     for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
         x = NULL;
     for(auto x : node)
@@ -56,7 +56,7 @@ void create()
 {
     for(int i =  1; i < 10; ++i)
     {
-        for(int j = 1; j < 10; +j)
+        for(int j = 1; j < 10; ++j)
         {
             if(board[i][j] == 0)
                 for(int k = 1; k < 10;  ++k)
@@ -289,8 +289,11 @@ int main()
                 cin >> board[i][j];
             }
         }
+        cout << "Enter successful!" << endl;
         create();
+        cout << "Create successful!" << endl;
         build();
+        cout << "Build successful!" << endl;
         if(dance(0))
             cout << "Yes" << endl;
         else

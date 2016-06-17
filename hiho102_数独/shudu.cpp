@@ -35,10 +35,10 @@ void init()
      */
 
     head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
-    memset(board, 0, SIZE * SIZE);
-    memset(id, 0, 730 * 325);
-    memset(matrix, 0, 730 * 325);
-    memset(cnt, 0, m + 1);
+    memset(board, 0, SIZE * SIZE * sizeof(int));
+    memset(id, 0, 730 * 325 * sizeof(int));
+    memset(matrix, 0, 730 * 325 * sizeof(int));
+    memset(cnt, 0, (m + 1) * sizeof(int));
     for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
         x = NULL;
     for(auto x : node)

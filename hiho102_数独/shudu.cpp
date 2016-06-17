@@ -30,6 +30,10 @@ Node *node[(n+1)*(m+1)];//构建结点矩阵
 
 void init()
 {
+    /*
+     *使用memset这个进行初始化非常不靠谱，还得是用for稳定
+     */
+
     head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
     memset(board, 0, SIZE * SIZE);
     memset(id, 0, 730 * 325);

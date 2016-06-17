@@ -28,27 +28,39 @@ Node *columnHead[m + 1];//构建列头结点
 Node *node[(n+1)*(m+1)];//构建结点矩阵
 
 
+/*
+ *使用memset进行初始化不靠谱，还得是用for循环
+ *切记切记！！！
+ */
 void init()
 {
     head = NULL;//这里一定要初始化为NULL，不然会报段错误，无法成功build函数
-    memset(board, 0, SIZE * SIZE);
-    memset(id, 0, 730 * 325);
-    memset(matrix, 0, 730 * 325);
-    memset(cnt, 0, m + 1);
+    for(int i = 0; i < SIZE; ++i)
+        for(int j = 0; j < SIZE; ++j)
+            board[i][j] = 0;
+    for(int i = 0; i <= n; ++i)
+        for(int j = 0; j <= m; ++j)
+            id[i][j] = 0;
+    for(int i = 0; i <= n; ++i)
+        for(int j = 0; j <= m; ++j)
+            matrix[i][j] = 0;
+    for(int i = 0; i <= m; ++i)
+        cnt[i] = 0;
+    for(int i = 0; i < SIZE; ++i)
+        for(int j = 0; j < SIZE; ++j)
+            ans[i][j] = 0;
+
+    //memset(board, 0, SIZE * SIZE);
+    //memset(id, 0, 730 * 325);
+    //memset(matrix, 0, 730 * 325);
+    //memset(cnt, 0, m + 1);
+    //memset(ans, 0, SIZE * SIZE);
     for(auto x : columnHead)//使用C11新特性初始化为NULL，方便
         x = NULL;
     for(auto x : node)
         x = NULL;
 }
 
-void clear()
-{
-    delete head;
-    for(auto x : columnHead)
-        delete x;
-    for(auto x : node)
-        delete x;
-}
 
 void set(int i, int j, int k)
 {
@@ -282,7 +294,6 @@ int main()
                 cout << endl;
             }
         }
-        clear();
     }
     return 0;
 }

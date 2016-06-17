@@ -62,6 +62,7 @@ void create()
 
 bool dfs(int depth)
 {
+    cout << depth << endl;
     if(col_covered.count() == N)
         return true;
     else if(row_used.count() == M)
@@ -102,13 +103,18 @@ int main()
             for(int j = 1; j < 10; ++j)
                 cin >> board[i][j];
         create();
-    }
-    if(dfs(1))
-    {
-        for(int i = 1; i <= M; ++i)
-            cout << ans[i] << " ";
-        cout << endl;
-        cout << "Yes" << endl;
+        for(const auto x : row)
+        {
+            cout << x << endl;
+            getchar();
+        }
+        if(dfs(1))
+        {
+            for(int i = 1; i <= M; ++i)
+                cout << ans[i] << " ";
+            cout << endl;
+            cout << "Yes" << endl;
+        }
     }
     return 0;
 }

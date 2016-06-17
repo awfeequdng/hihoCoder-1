@@ -103,11 +103,6 @@ int main()
             for(int j = 1; j < 10; ++j)
                 cin >> board[i][j];
         create();
-        for(const auto x : row)
-        {
-            cout << x << endl;
-            getchar();
-        }
         if(dfs(1))
         {
             for(int i = 1; i <= M; ++i)

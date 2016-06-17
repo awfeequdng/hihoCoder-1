@@ -7,6 +7,7 @@
 using namespace std;
 
 int board[SIZE][SIZE];
+int ans[M+1];
 bitset<N+1> row[M+1];
 bitset<M+1> col[N+1];
 bitset<M+1> row_used;
@@ -15,6 +16,7 @@ bitset<N+1> col_covered;
 void init()
 {
     memset(board, 0, SIZE * SIZE * sizeof(int));
+    memset(ans, 0, (M + 1) * sizeof(int));
     row_used.reset();
     col_covered.reset();
     for(int i = 0; i < M+1; ++i)
@@ -58,6 +60,37 @@ void create()
     }
 }
 
+bool dfs(int depth)
+{
+    if(col_covered.count() == N)
+        return true;
+    else if(row_used.count() == M)
+        return false;
+
+    bitset<M+1> row_record = row_used;
+    bitset<N+1> col_record = col_covered;
+
+    for(int i = depth; i <= M; ++i)
+    {
+        if(row_used[i] == 0)
+        {
+            for(int j = 1; j <= N; ++j)
+            {
+                if(row[i][j] == 1)
+                    row_used |= col[j];
+            }
+
+            col_covered |= row[i];
+
+            if(dfs(i + 1))
+                return true;
+            row_used = row_record;
+            col_covered = col_record;
+        }
+    }
+    return false;
+}
+
 int main()
 {
     int num;
@@ -69,6 +102,13 @@ int main()
             for(int j = 1; j < 10; ++j)
                 cin >> board[i][j];
         create();
+    }
+    if(dfs(1))
+    {
+        for(int i = 1; i <= M; ++i)
+            cout << ans[i] << " ";
+        cout << endl;
+        cout << "Yes" << endl;
     }
     return 0;
 }

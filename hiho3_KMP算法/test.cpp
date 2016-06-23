@@ -7,6 +7,6 @@ int main()
 {
     string temp;
     while(cin >> temp)
-        cout << sizeof(temp) << endl;
+        cout << temp.length() << endl;
     return 0;
 }

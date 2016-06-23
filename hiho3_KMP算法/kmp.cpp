@@ -4,14 +4,12 @@
 
 using namespace std;
 
-string str;
-string p;
-int next[10005];
+int flag[10005];
 
-void getNext(int next[], string p)
+void getNext(string p)
 {
-    int pLen = strlen(p);
-    next[0] = -1;
+    int pLen = p.length();
+    flag[0] = -1;
     int k = -1;
     int j = 0;
     while(j < pLen - 1)
@@ -21,22 +19,22 @@ void getNext(int next[], string p)
             j++;
             k++;
             if(p[j] != p[k])
-                next[j] = k;
+                flag[j] = k;
             else
-                next[j] = next[k];
+                flag[j] = flag[k];
         }
         else
-            k = next[k];
+            k = flag[k];
     }
 }
 
-int kmpSearch(string str, str p)
+int kmpSearch(string s, string p)
 {
     int count = 0;
     int j = 0;
     int i = 0;
-    int sLen = strlen(str);
-    int pLen = strlen(p);
+    int sLen = s.length();
+    int pLen = p.length();
     while(i < sLen)
     {
         if(j == -1 || s[i] == p[j])
@@ -46,7 +44,7 @@ int kmpSearch(string str, str p)
         }
         else
         {
-            j = next[j];
+            j = flag[j];
         }
         if(j == pLen - 1)
             count++;
@@ -57,10 +55,14 @@ int kmpSearch(string str, str p)
 int main()
 {
     int num;
+    string str;
+    string p;
     cin >> num;
     while(num--)
     {
+        memset(flag, 0, 10005 * sizeof(int));
         cin >> p;
+        p = p + "*";
         cin >> str;
         getNext(p);
         cout << kmpSearch(str, p) << endl;

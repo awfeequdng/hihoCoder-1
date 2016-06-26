@@ -12,6 +12,7 @@ typedef struct node
     node(int key_, int weight_) : key(key_), weight(weight_) {this->left = NULL; this->right = NULL;}
 }*Node;
 
+Node root = NULL;
 
 //左旋函数
 void left_rotate(Node a)
@@ -86,14 +87,102 @@ void rotate(Node node)
     }
 }
 
+//查找结点函数
+Node find(int key)
+{
+    Node n = root;
+    while(n)
+    {
+        if(n->key == key)
+            return n;
+        else if(n->key > key)
+        {
+            if(n->left)
+                n = n->left;
+            else
+                return NULL;
+        }
+        else
+        {
+            if(n->key < key)
+            {
+                if(n->right)
+                    n = n->right;
+                else
+                    return NULL;
+            }
+        }
+    }
+    return NULL;
+}
+
+//删除特定结点
+void del(int key)
+{
+    Node node = find(key);
+    while(node->left && node->right)
+    {
+        Node child = node->left;
+        if(child->weight > node->right->weight)
+        {
+            child = node->right;
+            left_rotate(node);
+        }
+        else
+            right_rotate(node);
+    }
+
+    Node fa = node->father;
+    if(node->left)
+    {
+        node->left->father = fa;
+        if(node = fa->left)
+            fa->left = node->left;
+        else
+            fa->right = node->left;
+    }
+    else if(node->right)
+    {
+        node->right->father = fa;
+        if(node = fa->left)
+            fa->left = node->right;
+        else
+            fa->right = node->right;
+    }
+    else
+    {
+        if(node == fa->left)
+            fa->left = NULL;
+        else
+            fa->right = NULL;
+    }
+}
+
+void query(int key)
+{
+    Node n = root;
+    int res;
+    while(n)
+    {
+        if(n->key <= key)
+        {
+            res = n->key;
+            n = n->right;
+        }
+        else
+        {
+            n = n->left;
+        }
+    }
+    cout << res << endl;
+}
 
 int main()
 {
-    Node root = NULL;
     int n;
     int num;
     char ch;
-    cin >> num;
+    cin >> n;
     while(n--)
     {
         cin >> ch;

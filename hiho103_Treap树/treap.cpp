@@ -179,8 +179,7 @@ void query(int key)
 
 int main()
 {
-    int n;
-    int num;
+    int n, num;
     char ch;
     cin >> n;
     while(n--)

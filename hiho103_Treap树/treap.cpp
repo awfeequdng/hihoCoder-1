@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -10,6 +11,7 @@ typedef struct node
     node() {}
     node(int key_, int weight_) : key(key_), weight(weight_) {this->left = NULL; this->right = NULL;}
 }*Node;
+
 
 //左旋函数
 void left_rotate(Node a)
@@ -48,7 +50,7 @@ Node insert(Node n, int key)
     {
         if(n->left == NULL)
         {
-            n->left = new node(key, random());
+            n->left = new node(key, random() % 1000);
             return n->left;
         }
         else
@@ -58,7 +60,7 @@ Node insert(Node n, int key)
     {
         if(n->right == NULL)
         {
-            n->right = new node(key, random());
+            n->right = new node(key, random() % 1000);
             return n->right;
         }
         else
@@ -99,11 +101,11 @@ int main()
         if(ch == 'I')
         {
             if(root == NULL)
-                root = new node(num, random());
+                root = new node(num, random() % 1000);
             else
-                rotate(insert(root, x));
+                rotate(insert(root, num));
         }
-        elseif(ch == 'Q')
+        else if(ch == 'Q')
         {
             query(num);
         }

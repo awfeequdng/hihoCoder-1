@@ -158,6 +158,7 @@ void del(int key)
     }
 }
 
+//这个算法写得还可以
 void query(int key)
 {
     Node n = root;

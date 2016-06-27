@@ -161,9 +161,9 @@ Node bst_find(Node n, int key)
         return bst_find(p->right, key);
 }
 
-Node find(key)
+Node find(int key)
 {
-    Node node = bst_find(key);
+    Node node = bst_find(root, key);
     splay(node, NULL);
     return node;
 }
@@ -189,13 +189,13 @@ Node find_next(int key)
 }
 
 //删除结点
-void delete(int key)
+void del(int key)
 {
     Node prev = find_prev(key);
     Node next = find_next(key);
     splay(prev, NULL);
     splay(next, NULL);
-    next.left = NULL;
+    next->left = NULL;
 }
 
 void delete_interval(int a, int b)
@@ -209,21 +209,18 @@ void delete_interval(int a, int b)
 
 void query(int key)
 {
+    splay(root, NULL);
     Node p = root;
-    int res;
-    if(p->key <= key)
+    int res = 0;
+    while(p)
     {
-        while(p->key <= key)
+        if(p->key <= key)
         {
             res = p->key;
-            p = p->right;
+            p = p ->right;
         }
-    }
-    else
-    {
-        while(p->key > key)
+        else
             p = p->left;
-        res = p->key;
     }
     cout << res << endl;
 }
@@ -237,9 +234,9 @@ int main()
     while(n--)
     {
         cin >> ch >> num;
-        if(ch == "I")
+        if(ch == 'I')
             insert(num);
-        else if(ch == "Q")
+        else if(ch == 'Q')
             query(num);
         else
         {

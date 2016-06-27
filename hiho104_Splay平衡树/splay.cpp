@@ -106,4 +106,147 @@ void splay(Node x, Node y)
     }
 }
 
+//插入函数
+Node bst_insert(Node n, int key)
+{
+    Node p = n;
+    if(p == NULL)
+    {
+        p = new node(key);
+        return p;
+    }
+    else
+    {
+        if(p->key >= key)
+        {
+            if(p->left == NULL)
+            {
+                p->left = new node(key);
+                p->left->father = p;
+                return p->left;
+            }
+            else
+                return bst_insert(p->left, key);
+        }
+        else
+        {
+            if(p->right == NULL)
+            {
+                p->right = new node(key);
+                p->right->father = p;
+                return p->right;
+            }
+            else
+                return bst_insert(p->right, key);
+        }
+    }
+}
 
+Node insert(int key)
+{
+    Node node = bst_insert(root, key);
+    splay(node, NULL);
+    return node;
+}
+
+//查找函数
+Node bst_find(Node n, int key)
+{
+    Node p = n;
+    if(p->key == key)
+        return p;
+    else if(p->key < key)
+        return bst_find(p->left, key);
+    else
+        return bst_find(p->right, key);
+}
+
+Node find(key)
+{
+    Node node = bst_find(key);
+    splay(node, NULL);
+    return node;
+}
+
+//查找前置结点
+Node find_prev(int key)
+{
+    Node node = find(key);
+    Node p = node->left;
+    while(p->right)
+        p = p->right;
+    return p;
+}
+
+//查找后置结点
+Node find_next(int key)
+{
+    Node node = find(key);
+    Node p = node->right;
+    while(p->left)
+        p = p->left;
+    return p;
+}
+
+//删除结点
+void delete(int key)
+{
+    Node prev = find_prev(key);
+    Node next = find_next(key);
+    splay(prev, NULL);
+    splay(next, NULL);
+    next.left = NULL;
+}
+
+void delete_interval(int a, int b)
+{
+    Node prev = find_prev(a);
+    Node next = find_next(b);
+    splay(prev, NULL);
+    splay(next, prev);
+    next->left = NULL;
+}
+
+void query(int key)
+{
+    Node p = root;
+    int res;
+    if(p->key <= key)
+    {
+        while(p->key <= key)
+        {
+            res = p->key;
+            p = p->right;
+        }
+    }
+    else
+    {
+        while(p->key > key)
+            p = p->left;
+        res = p->key;
+    }
+    cout << res << endl;
+}
+
+int main()
+{
+    int num;
+    char ch;
+    int n;
+    cin >> n;
+    while(n--)
+    {
+        cin >> ch >> num;
+        if(ch == "I")
+            insert(num);
+        else if(ch == "Q")
+            query(num);
+        else
+        {
+            int num2;
+            cin >> num2;
+            delete_interval(num, num2);
+        }
+    }
+    return 0;
+}

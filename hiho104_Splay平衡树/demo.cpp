@@ -110,11 +110,11 @@ void splay(Node x, Node y)
 Node bst_insert(Node n, int key)
 {
     Node p = n;
-    if(n == NULL)
+    //初始化root结点
+    if(root == NULL)
     {
-        n = new node(key);
-        cout << "root complete!" << endl;
-        return n;
+        root = new node(key);
+        return root;
     }
     else
     {
@@ -147,7 +147,6 @@ Node insert(int key)
 {
     Node node = bst_insert(root, key);
     splay(node, NULL);
-    root = node;
     return node;
 }
 

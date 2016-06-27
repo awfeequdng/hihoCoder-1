@@ -143,11 +143,10 @@ Node bst_insert(Node n, int key)
     }
 }
 
-Node insert(int key)
+void insert(int key)
 {
     Node node = bst_insert(root, key);
     splay(node, NULL);
-    return node;
 }
 
 //查找函数

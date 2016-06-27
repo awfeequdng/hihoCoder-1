@@ -147,6 +147,7 @@ Node insert(int key)
 {
     Node node = bst_insert(root, key);
     splay(node, NULL);
+    root = node;
     return node;
 }
 
@@ -210,7 +211,6 @@ void delete_interval(int a, int b)
 
 void query(int key)
 {
-    splay(root, NULL);
     Node p = root;
     int res = 0;
     while(p)
@@ -228,7 +228,6 @@ void query(int key)
 
 int main()
 {
-    root = new node(9999);
     int num;
     char ch;
     int n;
@@ -239,7 +238,9 @@ int main()
         if(ch == 'I')
             insert(num);
         else if(ch == 'Q')
+        {
             query(num);
+        }
         else if(ch == 'D')
         {
             int num2;

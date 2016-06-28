@@ -30,11 +30,11 @@ void right_rotate(Node x)
         else
             p->father->right = x;
     }
-    else
-        root = x;
-
+    //else
+        //root = x;
     p->left = x->right;
-    x->right->father = p;
+    if(x->right)
+        x->right->father = p;
     x->right = p;
     p->father = x;
 }
@@ -51,11 +51,12 @@ void left_rotate(Node x)
         else
             p->father->right = x;
     }
-    else
-        root = x;
+    //else
+        //root = x;
 
     p->right = x->left;
-    x->left->father = p;
+    if(x->left)
+        x->left->father = p;
     x->left = p;
     p->father = x;
 }
@@ -76,6 +77,7 @@ void splay(Node x, Node y)
         else
         {
             Node g = p->father;
+            cout << g->key << endl;
             if(g->left == p)
             {
                 if(p->left == x)
@@ -146,8 +148,8 @@ Node bst_insert(Node n, int key)
 void insert(int key)
 {
     Node node = bst_insert(root, key);
+    cout << "insert success" << endl;
     splay(node, NULL);
-    root = node;
 }
 
 //查找函数

@@ -147,6 +147,7 @@ void insert(int key)
 {
     Node node = bst_insert(root, key);
     splay(node, NULL);
+    root = node;
 }
 
 //查找函数

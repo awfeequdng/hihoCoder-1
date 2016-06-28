@@ -77,7 +77,6 @@ void splay(Node x, Node y)
         else
         {
             Node g = p->father;
-            cout << g->key << endl;
             if(g->left == p)
             {
                 if(p->left == x)
@@ -120,7 +119,7 @@ Node bst_insert(Node n, int key)
     }
     else
     {
-        if(p->key >= key)
+        if(p->key > key)
         {
             if(p->left == NULL)
             {

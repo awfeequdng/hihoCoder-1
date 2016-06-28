@@ -15,6 +15,10 @@ typedef struct node
     }
 }*Node;
 
+//加入root结点
+Node root = NULL;
+
+
 int main()
 {
     return 0;

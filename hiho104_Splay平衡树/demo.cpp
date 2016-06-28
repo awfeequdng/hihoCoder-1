@@ -245,6 +245,8 @@ int main()
         {
             int num2;
             cin >> num2;
+            insert(num);
+            insert(num2);
             delete_interval(num, num2);
         }
     }

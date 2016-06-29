@@ -175,7 +175,7 @@ Node find_prev(int key)
 {
     Node node = find(key);
     Node p = node->left;
-    while(p->right)
+    while(p->right && p->right->key < key)
         p = p->right;
     return p;
 }
@@ -185,7 +185,7 @@ Node find_next(int key)
 {
     Node node = find(key);
     Node p = node->right;
-    while(p->left)
+    while(p->left && p->left->key > key)
         p = p->left;
     return p;
 }

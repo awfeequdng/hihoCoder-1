@@ -167,6 +167,7 @@ Node find(int key)
 {
     Node node = bst_find(root, key);
     splay(node, NULL);
+    root = node;
     return node;
 }
 

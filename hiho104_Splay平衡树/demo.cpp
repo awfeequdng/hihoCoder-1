@@ -30,8 +30,8 @@ void right_rotate(Node x)
         else
             p->father->right = x;
     }
-    //else
-        //root = x;
+    else
+        root = x;
     p->left = x->right;
     if(x->right)
         x->right->father = p;
@@ -51,8 +51,8 @@ void left_rotate(Node x)
         else
             p->father->right = x;
     }
-    //else
-        //root = x;
+    else
+        root = x;
 
     p->right = x->left;
     if(x->left)
@@ -147,8 +147,8 @@ Node bst_insert(Node n, int key)
 void insert(int key)
 {
     Node node = bst_insert(root, key);
-    cout << "insert success" << endl;
     splay(node, NULL);
+    root = node;
 }
 
 //查找函数

@@ -268,7 +268,7 @@ void query(int key)
         if(p->key <= key)
         {
             res = p->key;
-            p = p ->right;
+            p = p->right;
         }
         else
             p = p->left;

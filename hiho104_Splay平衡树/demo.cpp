@@ -147,11 +147,17 @@ Node bst_insert(Node n, int key)
 void insert(int key)
 {
     Node node = bst_insert(root, key);
-    splay(node, NULL);
-    root = node;
+    if(node)
+    {
+        splay(node, NULL);
+        root = node;
+    }
+    else
+        cout << "Insert error!" << endl;
 }
 
 //查找函数
+/*
 Node bst_find(Node n, int key)
 {
     Node p = n;
@@ -161,38 +167,77 @@ Node bst_find(Node n, int key)
         return bst_find(p->left, key);
     else
         return bst_find(p->right, key);
+}*/
+
+Node bst_find(int key)
+{
+    Node p = root;
+    while(p)
+    {
+        if(p->key == key)
+            return p;
+        else if(p->key < key)
+            p = p->right;
+        else
+            p = p->left;
+    }
+    return NULL;
 }
 
 Node find(int key)
 {
-    Node node = bst_find(root, key);
-    splay(node, NULL);
-    root = node;
-    return node;
+    Node node = bst_find(key);
+    if(node)
+    {
+        splay(node, NULL);
+        root = node;
+        return node;
+    }
+    else
+    {
+        cout << "Find error!" << endl;
+        return NULL;
+    }
 }
 
 //查找前置结点
 Node find_prev(int key)
 {
     Node node = find(key);
-    Node p = node->left;
-    while(p->key == key)
-        p = p->left;
-    while(p->right && p->right->key < key)
-        p = p->right;
-    return p;
+    if(node)
+    {
+        Node p = node->left;
+        while(p->key ==  key)
+            p = p->left;
+        while(p->right && p->right->key < key)
+            p = p->right;
+        return p;
+    }
+    else
+    {
+        cout << "Find prev error!" << endl;
+        return NULL;
+    }
 }
 
 //查找后置结点
 Node find_next(int key)
 {
     Node node = find(key);
-    Node p = node->right;
-    while(p->key == key)
-        p = p->right;
-    while(p->left && p->left->key > key)
-        p = p->left;
-    return p;
+    if(node)
+    {
+        Node p = node->right;
+        while(p->key == key)
+            p = p->right;
+        while(p->left && p->left->key > key)
+            p = p->left;
+        return p;
+    }
+    else
+    {
+        cout << "Find next error!" << endl;
+        return NULL;
+    }
 }
 
 //删除结点

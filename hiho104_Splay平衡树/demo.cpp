@@ -280,6 +280,8 @@ int main()
 {
     int num;
     char ch;
+    insert(-999);
+    insert(999);
     int n;
     cin >> n;
     while(n--)

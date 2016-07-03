@@ -6,9 +6,12 @@ using namespace std;
 int main()
 {
     set<int> s;
-    for(int i = 0; i < 19; ++i)
-        s.insert(i);
     int num;
+    for(int i = 0; i < 9; ++i)
+    {
+        cin >> num;
+        s.insert(num);
+    }
     while(cin >> num)
     {
        set<int>::iterator it = s.upper_bound(num);

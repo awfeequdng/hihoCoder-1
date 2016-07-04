@@ -18,7 +18,10 @@ typedef struct node
     }
     bool operator < (const node *a)
     {
-        return this->id < a->id;
+        if(this->id != a->id)
+            return this->id < a->id;
+        else
+            return this->key < a->key;
     }
 }*Node;
 

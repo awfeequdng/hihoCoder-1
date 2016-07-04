@@ -30,7 +30,7 @@ int main()
     long long res = 0;
     while(n--)
     {
-        res = 0;
+        res = -1;
         bool flag = false;
         cin >> ch >> a >> b;
         if(ch == 'I')
@@ -56,8 +56,8 @@ int main()
                 if((*it)->id >= a && (*it)->id <= b)
                     res += (*it)->key;
             }
-            if(res > 0)
-                cout << res << endl;
+            if(res >= 0)
+                cout << res+1 << endl;
         }
         else if(ch == 'M')
         {

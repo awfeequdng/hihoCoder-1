@@ -268,7 +268,13 @@ int main()
         if(ch == 'I')
             insert(num);
         else if(ch == 'Q')
-            cout << query(root, num) << endl;
+        {
+            int ans = query(root, num);
+            if(ans == 0)
+                cout << num << endl;
+            else
+                cout << ans << endl;
+        }
         else if(ch == 'D')
         {
             int num2;

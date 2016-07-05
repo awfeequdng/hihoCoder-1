@@ -8,15 +8,13 @@ typedef class node
     public:
         int key;
         node *father, *left, *right;
-        node() {}
         node(int key_) : key(key_)
         {
-            this->father = NULL;
-            this->left = NULL;
-            this->right = NULL;
+            father = NULL;
+            left = NULL;
+            right = NULL;
         }
 }*Node;
-
 Node root = NULL;
 
 void right_rotate(Node x)
@@ -61,7 +59,7 @@ void left_rotate(Node x)
 
 void splay(Node x, Node y)
 {
-    if(x->father == NULL)
+    if(x == NULL)
         return;
     while(x->father != y)
     {

@@ -198,15 +198,15 @@ void myDelete(int key){
 void deleteInterval(int a,int b) {
     if(a<=MIN_K) a=MIN_K+1;
     if(b>=MAX_K) b=MAX_K-1;
-    
+
     Node* aa = bst_find(root, a);
     if(aa==NULL) insert(a);
 	Node* prev = findPrev(a);
-	
+
     Node* bb = bst_find(root, b);
     if(bb==NULL) insert(b);
 	Node* next = findNext(b);
-	
+
 	splay(prev, NULL);
 	splay(next, prev);
 // 	delete next->left;
@@ -268,7 +268,7 @@ void solve() {
     // root=NULL;
     // insert(MIN_K);
     // insert(MAX_K);
-    
+    //
     // insert(1);
     // insert(2);
     // insert(3);

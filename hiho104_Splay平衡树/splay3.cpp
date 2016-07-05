@@ -242,6 +242,8 @@ int main()
     char ch;
     int n;
     cin >> n;
+    insert(MIN_K);
+    insert(MAX_K);
     while(n--)
     {
         cin >> ch >> num;

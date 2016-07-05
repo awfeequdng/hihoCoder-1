@@ -4,10 +4,10 @@ using namespace std;
 
 typedef struct node
 {
-    int key;
+    long long key;
     struct node *left, *right, *father;
     node() {}
-    node(int key_) : key(key_)
+    node(long long key_) : key(key_)
     {
         this->left = NULL;
         this->right = NULL;
@@ -32,9 +32,9 @@ void right_rotate(Node x)
     }
     else
         root = x;
+
     p->left = x->right;
-    if(x->right)
-        x->right->father = p;
+    x->right->father = p;
     x->right = p;
     p->father = x;
 }
@@ -55,8 +55,7 @@ void left_rotate(Node x)
         root = x;
 
     p->right = x->left;
-    if(x->left)
-        x->left->father = p;
+    x->left->father = p;
     x->left = p;
     p->father = x;
 }
@@ -95,7 +94,7 @@ void splay(Node x, Node y)
                 if(p->right == x)
                 {
                     left_rotate(p);
-                    left_rotate(x);
+                    left_rotate(p);
                 }
                 else
                 {
@@ -108,18 +107,18 @@ void splay(Node x, Node y)
 }
 
 //插入函数
-Node bst_insert(Node n, int key)
+Node bst_insert(Node n, long long key)
 {
     Node p = n;
-    //初始化root结点
-    if(root == NULL)
+    if(n == NULL)
     {
-        root = new node(key);
-        return root;
+        n = new node(key);
+        cout << "root complete!" << endl;
+        return n;
     }
     else
     {
-        if(p->key > key)
+        if(p->key >= key)
         {
             if(p->left == NULL)
             {
@@ -144,21 +143,15 @@ Node bst_insert(Node n, int key)
     }
 }
 
-void insert(int key)
+Node insert(long long key)
 {
     Node node = bst_insert(root, key);
-    if(node)
-    {
-        splay(node, NULL);
-        root = node;
-    }
-    else
-        cout << "Insert error!" << endl;
+    splay(node, NULL);
+    return node;
 }
 
 //查找函数
-/*
-Node bst_find(Node n, int key)
+Node bst_find(Node n, long long key)
 {
     Node p = n;
     if(p->key == key)
@@ -167,81 +160,37 @@ Node bst_find(Node n, int key)
         return bst_find(p->left, key);
     else
         return bst_find(p->right, key);
-}*/
-
-Node bst_find(int key)
-{
-    Node p = root;
-    while(p)
-    {
-        if(p->key == key)
-            return p;
-        else if(p->key < key)
-            p = p->right;
-        else
-            p = p->left;
-    }
-    return NULL;
 }
 
-Node find(int key)
+Node find(long long key)
 {
-    Node node = bst_find(key);
-    if(node)
-    {
-        splay(node, NULL);
-        root = node;
-        return node;
-    }
-    else
-    {
-        cout << "Find error!" << endl;
-        return NULL;
-    }
+    Node node = bst_find(root, key);
+    splay(node, NULL);
+    return node;
 }
 
 //查找前置结点
-Node find_prev(int key)
+Node find_prev(long long key)
 {
     Node node = find(key);
-    if(node)
-    {
-        Node p = node->left;
-        while(p->key ==  key)
-            p = p->left;
-        while(p->right && p->right->key < key)
-            p = p->right;
-        return p;
-    }
-    else
-    {
-        cout << "Find prev error!" << endl;
-        return NULL;
-    }
+    Node p = node->left;
+    while(p->right)
+        p = p->right;
+    return p;
 }
 
 //查找后置结点
-Node find_next(int key)
+Node find_next(long long key)
 {
     Node node = find(key);
-    if(node)
-    {
-        Node p = node->right;
-        while(p->key == key)
-            p = p->right;
-        while(p->left && p->left->key > key)
-            p = p->left;
-        return p;
-    }
-    else
-    {
-        cout << "Find next error!" << endl;
-        return NULL;
-    }
+    Node p = node->right;
+    while(p->left)
+        p = p->left;
+    return p;
 }
 
 //删除结点
-void del(int key)
+void del(long long key)
 {
     Node prev = find_prev(key);
     Node next = find_next(key);
@@ -250,8 +199,12 @@ void del(int key)
     next->left = NULL;
 }
 
-void delete_interval(int a, int b)
+void delete_interval(long long a, long long b)
 {
+    if(a <= 0)
+        a = 1;
+    if(b >= 1000000000)
+        b = 1000000000;
     Node prev = find_prev(a);
     Node next = find_next(b);
     splay(prev, NULL);
@@ -259,16 +212,17 @@ void delete_interval(int a, int b)
     next->left = NULL;
 }
 
-void query(int key)
+void query(long long key)
 {
+    splay(root, NULL);
     Node p = root;
-    int res = 0;
+    long long res = 0;
     while(p)
     {
         if(p->key <= key)
         {
             res = p->key;
-            p = p->right;
+            p = p ->right;
         }
         else
             p = p->left;
@@ -278,10 +232,9 @@ void query(int key)
 
 int main()
 {
-    int num;
+    root = new node(9999);
+    long long num;
     char ch;
-    insert(-999);
-    insert(999);
     int n;
     cin >> n;
     while(n--)
@@ -290,15 +243,11 @@ int main()
         if(ch == 'I')
             insert(num);
         else if(ch == 'Q')
-        {
             query(num);
-        }
         else if(ch == 'D')
         {
-            int num2;
+            long long num2;
             cin >> num2;
-            insert(num);
-            insert(num2);
             delete_interval(num, num2);
         }
     }

@@ -1,21 +1,20 @@
 #include <iostream>
+using namespace std;
 #define MIN_K -1
 #define MAX_K 1000000001
 
-using namespace std;
-
-typedef struct node
+typedef class node
 {
-    int key;
-    node *father, *left, *right;
-    node(int key_) : key(key_)
-    {
-        this->father = NULL;
-        this->left = NULL;
-        this->right = NULL;
-    }
+    public:
+        int key;
+        node *father, *left, *right;
+        node(int key_) : key(key_)
+        {
+            father = NULL;
+            left = NULL;
+            right = NULL;
+        }
 }*Node;
-
 Node root = NULL;
 
 void right_rotate(Node x)
@@ -85,7 +84,7 @@ void splay(Node x, Node y)
                 else
                 {
                     left_rotate(x);
-                    left_rotate(x);
+                    right_rotate(x);
                 }
             }
             else
@@ -105,92 +104,89 @@ void splay(Node x, Node y)
     }
 }
 
-Node bst_find(Node n, int k)
+Node bst_find(Node node, int key)
 {
-    if(n->key == k)
-        return n;
-    if(n->key > k)
+    if(key == node->key)
+        return node;
+    if(key < node->key)
     {
-        if(n->left == NULL)
+        if(node->left == NULL)
             return NULL;
         else
-            return bst_find(n->left, k);
+            return bst_find(node->left, key);
     }
     else
     {
-        if(n->right == NULL)
+        if(node->right == NULL)
             return NULL;
         else
-            return bst_find(n->right, k);
+            return bst_find(node->right, key);
     }
 }
 
 void find(int key)
 {
-    Node n = bst_find(root, key);
-    splay(n, NULL);
+    Node node = bst_find(root, key);
+    splay(node, NULL);
 }
 
-Node bst_insert(Node n, int k)
+Node bst_insert(Node n, int key)
 {
-    if(k < n->key)
+    if(key < n->key)
     {
         if(n->left == NULL)
         {
-            n->left == new node(k);
+            n->left = new node(key);
             n->left->father = n;
             return n->left;
         }
         else
-            return bst_insert(n->left, k);
+            return bst_insert(n->left, key);
     }
     else
     {
         if(n->right == NULL)
         {
-            n->right = new node(k);
+            n->right = new node(key);
             n->right->father = n;
             return n->right;
         }
         else
-            return bst_insert(n->right, k);
+            return bst_insert(n->right, key);
     }
 }
 
-void insert(int k)
+void insert(int key)
 {
     if(root == NULL)
-    {
-        root = new node(k);
-    }
+        root = new node(key);
     else
     {
-        Node n = bst_insert(root, k);
-        splay(n, NULL);
+        Node node = bst_insert(root, key);
+        splay(node, NULL);
     }
 }
 
+/*Node findPrev(int key)
+{
+    find(key);
+    Node node = root->left;
+    while(node->right)
+        node = node->right;
+    return node;
+}
+
+Node findNext(int key)
+{
+    find(key);
+    Node node = root->right;
+    while(node->left)
+        node = node->left;
+    return node;
+}*/
 Node findPrev(int k)
 {
-    find(k);
-    Node n = root->left;
-    while(n->right)
-        n = n->right;
-    return n;
-}
-
-Node findNext(int k)
-{
-    find(k);
-    Node n = root->right;
-    while(n->left)
-        n = n->left;
-    return n;
-}
-
-/*Node findPrev(int k)
-{
-    Node n = find(k);
+    Node n = bst_find(root, k);
     if(n)
     {
         Node l = n->left;
@@ -209,7 +205,7 @@ Node findNext(int k)
 
 Node findNext(int k)
 {
-    Node n = find(k);
+    Node n = bst_find(root, k);
     if(n)
     {
         Node r = n->right;
@@ -224,12 +220,12 @@ Node findNext(int k)
         cout << "Find next error!" << endl;
         return NULL;
     }
-}*/
+}
 
-void del(int k)
+void del(int key)
 {
-    Node prev = findPrev(k);
-    Node next = findNext(k);
+    Node prev = findPrev(key);
+    Node next = findNext(key);
     splay(prev, NULL);
     splay(next, prev);
     next->left = NULL;
@@ -237,11 +233,12 @@ void del(int k)
 
 void deleteInterval(int a, int b)
 {
-    if(a <= MIN_K)
+    if(a < MIN_K)
         a = MIN_K + 1;
-    if(b >= MAX_K)
+    if(b > MAX_K)
         b = MAX_K - 1;
-    Node aa = bst_find(root, a);
+
+    Node aa =  bst_find(root, a);
     if(aa == NULL)
         insert(a);
     Node prev = findPrev(a);
@@ -257,13 +254,13 @@ void deleteInterval(int a, int b)
         next->left = NULL;
 }
 
-void query(int k)
+void query(int key)
 {
     Node p = root;
     int res = 0;
     while(p)
     {
-        if(p->key <= k)
+        if(p->key <= key)
         {
             res = p->key;
             p = p->right;
@@ -271,13 +268,9 @@ void query(int k)
         else
             p = p->left;
     }
-    if(res == 0)
-        cout << k << endl;
-    else
-        cout << res << endl;
+    cout << res << endl;
 }
-
-/*int res = 0;
+/*int res;
 int query(Node n, int k)
 {
     if(n->key == k)
@@ -294,18 +287,18 @@ int query(Node n, int k)
     else
     {
         res = n->key;
-        return query(n-right, k);
+        return query(n->right, k);
     }
 }*/
 
-
 int main()
 {
-    int n, num, num1;
+    int num;
     char ch;
+    int n;
+    cin >> n;
     insert(MIN_K);
     insert(MAX_K);
-    cin >> n;
     while(n--)
     {
         cin >> ch >> num;
@@ -315,8 +308,9 @@ int main()
             query(num);
         else if(ch == 'D')
         {
-            cin >> num1;
-            deleteInterval(num, num1);
+            int num2;
+            cin >> num2;
+            deleteInterval(num, num2);
         }
     }
     return 0;

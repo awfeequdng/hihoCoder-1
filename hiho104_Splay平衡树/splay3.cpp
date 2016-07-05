@@ -217,7 +217,7 @@ void deleteInterval(int a, int b)
         next->left = NULL;
 }
 
-void query(int key)
+/*void query(int key)
 {
     Node p = root;
     int res = 0;
@@ -232,6 +232,26 @@ void query(int key)
             p = p->left;
     }
     cout << res << endl;
+}*/
+int res;
+int query(Node n, int k)
+{
+    if(n->key == k)
+        return k;
+    if(n->key > k)
+    {
+        if(n->left == NULL)
+            return res;
+        else
+            return query(n->left, k);
+    }
+    if(n->right == NULL)
+        return n->key;
+    else
+    {
+        res = n->key;
+        return query(n->right, k);
+    }
 }
 
 int main()
@@ -248,7 +268,7 @@ int main()
         if(ch == 'I')
             insert(num);
         else if(ch == 'Q')
-            query(num);
+            cout << query(root, num) << endl;
         else if(ch == 'D')
         {
             int num2;

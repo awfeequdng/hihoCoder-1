@@ -10,9 +10,9 @@ typedef class node
         node *father, *left, *right;
         node(int key_) : key(key_)
         {
-            father = NULL;
-            left = NULL;
-            right = NULL;
+            this->father = NULL;
+            this->left = NULL;
+            this->right = NULL;
         }
 }*Node;
 Node root = NULL;
@@ -186,8 +186,8 @@ Node findNext(int key)
 }*/
 Node findPrev(int k)
 {
-    Node n = bst_find(root, k);
-    splay(n, NULL);
+    find(k);
+    Node n = root;
     if(n)
     {
         Node l = n->left;
@@ -206,8 +206,8 @@ Node findPrev(int k)
 
 Node findNext(int k)
 {
-    Node n = bst_find(root, k);
-    splay(n, NULL);
+    find(k);
+    Node n = root;
     if(n)
     {
         Node r = n->right;
@@ -235,9 +235,9 @@ void del(int key)
 
 void deleteInterval(int a, int b)
 {
-    if(a < MIN_K)
+    if(a <= MIN_K)
         a = MIN_K + 1;
-    if(b > MAX_K)
+    if(b >= MAX_K)
         b = MAX_K - 1;
 
     Node aa =  bst_find(root, a);

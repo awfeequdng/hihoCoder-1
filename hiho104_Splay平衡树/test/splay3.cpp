@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-#define MIN_K 0
+#define MIN_K -100000001
 #define MAX_K 1000000001
 
 typedef class node

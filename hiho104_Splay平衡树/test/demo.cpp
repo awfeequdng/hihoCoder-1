@@ -273,15 +273,18 @@ void query(int key)
         else
             p = p->left;
     }
-    cout << res << endl;
+    if(res == 0)
+        cout << key << endl;
+    else
+        cout << res << endl;
 }
 
 int main()
 {
     int num;
     char ch;
-    insert(-999);
-    insert(999);
+    insert(-1000000000);
+    insert(1000000000);
     int n;
     cin >> n;
     while(n--)

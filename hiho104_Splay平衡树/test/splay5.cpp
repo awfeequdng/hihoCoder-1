@@ -170,7 +170,7 @@ void insert(int k)
     }
 }
 
-Node findPrev(int k)
+/*Node findPrev(int k)
 {
     find(k);
     Node n = root->left;
@@ -186,11 +186,12 @@ Node findNext(int k)
     while(n->left)
         n = n->left;
     return n;
-}
+}*/
 
-/*Node findPrev(int k)
+Node findPrev(int k)
 {
-    Node n = find(k);
+    Node n = bst_find(root, k);
+    splay(n, NULL);
     if(n)
     {
         Node l = n->left;
@@ -209,7 +210,8 @@ Node findNext(int k)
 
 Node findNext(int k)
 {
-    Node n = find(k);
+    Node n = bst_find(root, k);
+    splay(n, NULL);
     if(n)
     {
         Node r = n->right;
@@ -224,7 +226,7 @@ Node findNext(int k)
         cout << "Find next error!" << endl;
         return NULL;
     }
-}*/
+}
 
 void del(int k)
 {

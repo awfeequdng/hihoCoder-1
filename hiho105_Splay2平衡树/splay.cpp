@@ -222,7 +222,7 @@ void insert(int id, int val)
     }
 }
 
-Node findPrev(int id)
+/*Node findPrev(int id)
 {
     find(id);
     Node n = root;
@@ -260,6 +260,24 @@ Node findNext(int id)
         cout << "Find next error!" << endl;
         return NULL;
     }
+}*/
+
+Node findPrev(int id)
+{
+    find(id);
+    Node node = root->left;
+    while(node->right)
+        node = node->right;
+    return node;
+}
+
+Node findNext(int id)
+{
+    find(id);
+    Node node = root->right;
+    while(node->left)
+        node = node->right;
+    return node;
 }
 
 void del(int id)
@@ -287,10 +305,13 @@ void deleteInterval(int a, int b)
 void query(int a, int b)
 {
     Node prev = findPrev(a);
+    cout << prev->id << endl;
     Node next = findNext(b);
+    cout << next->id << endl;
     splay(prev, NULL);
     splay(next, prev);
-    cout << next->left->totalVal << endl;
+    if(next->left)
+        cout << next->left->totalVal << endl;
 }
 
 void modefy(int a, int b, int d)

@@ -45,8 +45,8 @@ int main()
             {
                 if((*it).first >= a && (*it).first <= b)
                 {
-                    auto p = it;
-                    m.erase(p);
+                    it = m.erase(it);
+                    it--;
                 }
             }
         }

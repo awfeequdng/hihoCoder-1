@@ -1,6 +1,6 @@
 #include <iostream>
 #include <set>
-#define MAX_V 10000000
+#define MAX_V 100000000
 #define MIN_V 0
 using namespace std;
 
@@ -30,10 +30,14 @@ int main()
     int res = 0;
     while(n--)
     {
-        int res = 0;
+        long long res = 0;
         cin >> ch >> a >> b;
         if(ch == 'I')
         {
+            if(a < MIN_V)
+                a = MIN_V;
+            else if(a > MAX_V)
+                a = MAX_V;
             if(b < MIN_V)
                 b = MIN_V;
             else if(b > MAX_V)

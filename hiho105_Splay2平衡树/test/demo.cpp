@@ -74,7 +74,8 @@ int main()
             {
                 if((*it)->id >= a && (*it)->id <= b)
                 {
-                    s.erase(*it);
+                    auto p = it;
+                    s.erase(p);
                 }
             }
         }

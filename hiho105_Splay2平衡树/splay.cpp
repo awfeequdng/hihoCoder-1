@@ -276,7 +276,7 @@ Node findNext(int id)
     find(id);
     Node node = root->right;
     while(node->left)
-        node = node->right;
+        node = node->left;
     return node;
 }
 
@@ -305,9 +305,9 @@ void deleteInterval(int a, int b)
 void query(int a, int b)
 {
     Node prev = findPrev(a);
-    cout << prev->id << endl;
+    cout << "Prev:" << a << prev->id << endl;
     Node next = findNext(b);
-    cout << next->id << endl;
+    cout << "Next:" << next->id << endl;
     splay(prev, NULL);
     splay(next, prev);
     if(next->left)

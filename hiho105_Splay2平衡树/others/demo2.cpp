@@ -112,16 +112,16 @@ public:
   Node* insert(Node *cur, int k,int v) {
     if (cur == NULL) {
       cur = new Node(k,v, _hot);
-      if (k < _hot->key) 
+      if (k < _hot->key)
         _hot->l = cur;
-      else 
+      else
         _hot->r = cur;
       _hot = cur;
       splay(cur, NULL);
       return cur;
     }
     _hot = cur;
-    if (k < cur->key) 
+    if (k < cur->key)
       return insert(cur->l, k,v);
     else
       return insert(cur->r, k,v);
@@ -204,7 +204,7 @@ int main()
     }
     else if (s[0] == 'Q')
     {
-      scanf("%d%d", &a,&b);    
+      scanf("%d%d", &a,&b);
       printf("%d\n",mySplay->areaAdd(a,b));
     }
     else if (s[0] == 'D')

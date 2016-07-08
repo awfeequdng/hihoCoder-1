@@ -185,7 +185,7 @@ void find(int id)
 
 Node bst_insert(Node n, int id, int val)
 {
-    send(root);
+    send(n);
     if(id < n->id)
     {
         if(n->left == NULL)

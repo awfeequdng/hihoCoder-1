@@ -76,20 +76,38 @@ Node maintain(Node t, bool flag)
     maintain(t, true);
 }
 
-Node insert(Node t, int key)
+Node bst_insert(Node n, int key)
 {
-    if(t == NULL)
-        t = new node(key);
+    if(key < n->key)
+    {
+        if(n->left == NULL)
+        {
+            n->left = new node(key);
+            n->left->father = n;
+        }
+        else
+            return bst_insert(n->left, key);
+    }
     else
     {
-        t->num += 1;
-        if(key < t->key)
-            t->left = insert(t->left, key);
+        if(n->right == NULL)
+        {
+            n->right = new node(key);
+            return n->right;
+        }
         else
-            t->right = insert(t->right, key);
-        maintain(t, key >= t->key);
+            return bst_insert(n->right, key);
     }
-    return t;
+}
+void insert(int key)
+{
+    if(root == NULL)
+        root = new node(key);
+    else
+    {
+        Node node = bst_insert(root, key);
+        maintain(root, key >= root->key);
+    }
 }
 
 int del(Node t, int key)
@@ -155,7 +173,7 @@ int main()
         cin >> ch >> num;
         if(ch == 'I')
         {
-            insert(root, num);
+            insert(num);
             if(!root)
                 cout << "Root is NULL" << endl;
         }

@@ -77,6 +77,27 @@ void PosrOrder(Node n)
     }
 }
 
+void PreOrder2(Node n)
+{
+    stack<Node> s;
+    Node p = root;
+    while(p || !s.empty())
+    {
+        while(p)
+        {
+            cout << p->data << " ";
+            s.push(p);
+            p = p->left;
+        }
+        if(!s.empty())
+        {
+            p = s.top();
+            s.pop();
+            p = p->right;
+        }
+    }
+}
+
 int main()
 {
     int num;
@@ -86,6 +107,8 @@ int main()
     }
     cout << "前序遍历：";
     PreOrder(root);
+    cout << endl;
+    PreOrder2(root);
     cout << endl;
     cout << "中续遍历：";
     MidOrder(root);

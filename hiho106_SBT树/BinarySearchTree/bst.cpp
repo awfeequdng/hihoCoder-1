@@ -84,10 +84,13 @@ int main()
     {
         insert(root, num);
     }
+    cout << "前序遍历：";
     PreOrder(root);
     cout << endl;
+    cout << "中续遍历：";
     MidOrder(root);
     cout << endl;
+    cout << "后续遍历：";
     PosrOrder(root);
     cout << endl;
     return 0;

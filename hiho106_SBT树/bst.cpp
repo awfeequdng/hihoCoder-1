@@ -6,11 +6,79 @@ typedef struct node
     int key;
     int num;
     node *father, *left, *right;
-    node(int key) : key(key_)
+    node(int key_) : key(key_)
     {
         num = 1;
         father = NULL;
         left = NULL;
         right = NULL;
     }
+}*Node;
+
+Node root = NULL;
+
+Node insert(Node n, int key)
+{
+    if(root == NULL)
+    {
+        root = new node(key);
+        return root;
+    }
+    else
+    {
+        n->num++;
+        if(key < n->key)
+        {
+            if(n->left == NULL)
+            {
+                n->left = new node(key);
+                n->left->father = n;
+                return n->left;
+            }
+            else
+                return insert(n->left, key);
+        }
+        else
+        {
+            if(n->right == NULL)
+            {
+                n->right = new node(key);
+                n->right->father = n;
+                return n->right;
+            }
+            else
+                return insert(n->right, key);
+        }
+    }
+}
+
+void query(Node n, int cnt)
+{
+    if(n->left->num = cnt - 1)
+    {
+        cout << n->key << endl;
+    }
+    else
+    {
+        if(n->left->num > cnt - 1)
+            query(n->left, cnt);
+        else
+            query(n->right, (cnt - n->left->num - 1));
+    }
+}
+
+int main()
+{
+    int n, num;
+    char ch;
+    cin >> n;
+    while(n--)
+    {
+        cin >> ch >> num;
+        if(ch == 'I')
+            insert(root, num);
+        else if(ch == 'Q')
+            query(root, num);
+    }
+    return 0;
 }

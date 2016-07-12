@@ -147,6 +147,7 @@ Node insert(Node n, int key)
     }
     else
     {
+        n->num += 1;
         if(n->key > key)
         {
             if(n->left == NULL)

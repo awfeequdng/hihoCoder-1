@@ -119,6 +119,30 @@ void MidOrder2()
     }
 }
 
+void PosrOrder2()
+{
+    stack<Node> s;
+    Node pre, cur;
+    s.push(root);
+    while(!s.empty())
+    {
+        cur = s.top();
+        if((cur->left == NULL && cur->right == NULL) || (pre && (pre == cur->left || pre == cur->right)))
+        {
+            cout << cur->data << " ";
+            s.pop();
+            pre = cur;
+        }
+        else
+        {
+            if(cur->right)
+                s.push(cur->right);
+            if(cur->left)
+                s.push(cur->left);
+        }
+    }
+}
+
 int main()
 {
     int num;
@@ -131,13 +155,18 @@ int main()
     cout << endl;
     PreOrder2();
     cout << endl;
+
     cout << "中续遍历：" << endl;
     MidOrder(root);
     cout << endl;
     MidOrder2();
     cout << endl;
+
     cout << "后续遍历：" << endl;
     PosrOrder(root);
     cout << endl;
+    PosrOrder2();
+    cout << endl;
+
     return 0;
 }

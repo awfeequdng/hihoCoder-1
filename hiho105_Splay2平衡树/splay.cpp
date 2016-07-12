@@ -24,6 +24,8 @@ Node root = NULL;
 
 void update(Node n)
 {
+    if(n == NULL)
+        return;
     n->num = 1;
     n->totalVal = n->val;
 
@@ -42,8 +44,9 @@ void update(Node n)
 
 void marking(Node n, int delta)
 {
+    if(n == NULL)
+        return;
     n->lazy = n->lazy + delta;
-
     n->totalVal = n->totalVal + n->num * delta;
     n->val = n->val + delta;
 }
@@ -138,7 +141,7 @@ Node bst_insert(Node n, int id, int val)
         else
         {
             Node res = bst_insert(n->left, id, val);
-            update(n->left);
+            update(n);
             return res;
         }
     }
@@ -154,7 +157,7 @@ Node bst_insert(Node n, int id, int val)
         else
         {
             Node res = bst_insert(n->right, id, val);
-            update(n->right);
+            update(n);
             return res;
         }
     }
@@ -179,7 +182,7 @@ void splay(Node x, Node y)
             Node g = p->father;
             if(g->left == p)
             {
-                if(g->left == x)
+                if(p->left == x)
                 {
                     right_rotate(p);
                     right_rotate(x);

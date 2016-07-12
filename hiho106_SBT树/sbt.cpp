@@ -147,7 +147,7 @@ Node insert(Node n, int key)
     }
     else
     {
-        n->num += 1;
+        n->num += 1;  //结点数++
         if(n->key > key)
         {
             if(n->left == NULL)

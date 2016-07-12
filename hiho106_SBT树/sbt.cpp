@@ -205,9 +205,7 @@ int main()
     {
         cin >> ch >> num;
         if(ch == 'I')
-        {
             insert(root, num);
-        }
         else if(ch == 'Q')
             query(root, num);
     }

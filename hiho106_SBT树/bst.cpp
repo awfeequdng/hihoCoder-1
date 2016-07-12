@@ -54,6 +54,8 @@ Node insert(Node n, int key)
 
 void query(Node n, int cnt)
 {
+    if(n->num < cnt || cnt <= 0)
+        cout < "Error" << endl;
     if(n->left)
     {
         if(n->left->num == cnt - 1)
@@ -70,7 +72,8 @@ void query(Node n, int cnt)
     else if(cnt == 1)
         cout << n->key << endl;
     else
-        query(n->right, (cnt - 1));
+        if(n->right)
+            query(n->right, cnt - 1);
 }
 
 /*void MidOrder(Node n)

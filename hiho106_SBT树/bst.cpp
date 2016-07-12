@@ -54,18 +54,34 @@ Node insert(Node n, int key)
 
 void query(Node n, int cnt)
 {
-    if(n->left->num = cnt - 1)
+    if(n->left)
     {
-        cout << n->key << endl;
-    }
-    else
-    {
-        if(n->left->num > cnt - 1)
-            query(n->left, cnt);
+        if(n->left->num == cnt - 1)
+            cout << n->key <<  endl;
         else
-            query(n->right, (cnt - n->left->num - 1));
+        {
+            if(n->left->num > cnt - 1)
+                query(n->left, cnt);
+            else
+                if(n->right)
+                    query(n->right, (cnt - n->left->num - 1));
+        }
     }
+    else if(cnt == 1)
+        cout << n->key << endl;
+    else
+        query(n->right, (cnt - 1));
 }
+
+/*void MidOrder(Node n)
+{
+    if(n)
+    {
+        MidOrder(n->left);
+        cout << n->key << "-" << n->num <<  " ";
+        MidOrder(n->right);
+    }
+}*/
 
 int main()
 {

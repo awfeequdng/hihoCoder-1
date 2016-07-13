@@ -85,7 +85,7 @@ void right_rotate(Node n)
         else
         {
             root = n;
-            n->father = NULL; //这里非常重要 将root头结点father置为NULL
+            //n->father = NULL; //这里非常重要 将root头结点father置为NULL
         }
 
         p->left = n->right;
@@ -121,15 +121,15 @@ void left_rotate(Node n)
         else
         {
             root = n;
-            n->father = NULL; //将root的father置为NULL
+            //n->father = NULL; //将root的father置为NULL
         }
 
         p->right = n->left;
         if(n->left)
             n->left->father = p;
 
-        p->father = n;
         n->left = p;
+        p->father = n;
         update(p);
         update(n);
     }
@@ -299,7 +299,8 @@ void del(int a, int b)
     Node n = findNext(b);
     splay(p, NULL);
     splay(n, p);
-    n->left = NULL;
+    if(n)
+        n->left = NULL;
     update(n);
     update(p);
 }

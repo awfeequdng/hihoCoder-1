@@ -113,7 +113,7 @@ void left_rotate(Node n)
                 p->father->right = n;
         }
         else
-            n = root;
+            root = n;
 
         p->right = n->left;
         if(n->left)

@@ -1,11 +1,13 @@
 #include <iostream>
+#define MIN 0
+#define MAX 100000001
 using namespace std;
 
 typedef struct node
 {
     int id;
     int val;
-    int totalVal;
+    long int totalVal;
     int num;
     int lazy;
     node *father, *left, *right;
@@ -81,7 +83,10 @@ void right_rotate(Node n)
                 p->father->right = n;
         }
         else
+        {
             root = n;
+            n->father = NULL; //这里非常重要 将root头结点father置为NULL
+        }
 
         p->left = n->right;
         if(n->right)
@@ -92,6 +97,7 @@ void right_rotate(Node n)
 
         update(p);
         update(n);
+        //cout << "right_rotate" << endl;
     }
 }
 
@@ -113,7 +119,10 @@ void left_rotate(Node n)
                 p->father->right = n;
         }
         else
+        {
             root = n;
+            n->father = NULL; //将root的father置为NULL
+        }
 
         p->right = n->left;
         if(n->left)
@@ -221,24 +230,160 @@ void insert(int id, int val)
     }
 }
 
+Node bst_find(Node n, int id)
+{
+    if(n->id == id)
+        return n;
+    else
+    {
+        if(n->id > id)
+        {
+            if(n->left == NULL)
+                return NULL;
+            else
+                return bst_find(n->left, id);
+        }
+        else
+        {
+            if(n->right == NULL)
+                return NULL;
+            else
+                return bst_find(n->right, id);
+        }
+    }
+}
+
+void find(int id)
+{
+    Node p = bst_find(root, id);
+    splay(p, NULL);
+}
+
+Node findPrev(int id)
+{
+    find(id);
+    Node p = root->left;
+    while(p->right)
+        p = p->right;
+    cout << p->id << endl;
+    return p;
+}
+
+Node findNext(int id)
+{
+    find(id);
+    Node p = root->right;
+    while(p->left)
+        p = p->left;
+    cout << p->id << endl;
+    return p;
+}
+
+void modify(int a, int b, int d)
+{
+    Node p = findPrev(a);
+    Node n = findNext(b);
+    splay(p, NULL);
+    splay(n, p);
+    if(n->left)
+    {
+        marking(n->left, d);
+        update(n);
+        update(p);
+    }
+}
+
+void del(int a, int b)
+{
+    Node p = findPrev(a);
+    Node n = findNext(b);
+    splay(p, NULL);
+    splay(n, p);
+    n->left = NULL;
+    update(n);
+    update(p);
+}
+
+void query(int a, int b)
+{
+    Node p = findPrev(a);
+    Node n = findNext(b);
+    splay(p, NULL);
+    splay(n, p);
+    if(n->left)
+    {
+        cout << n->left->totalVal << endl;
+    }
+    else
+        cout << 0 << endl;
+}
+
 void MidOrder(Node n)
 {
     if(n)
     {
+        cout << "Go" << endl;
         MidOrder(n->left);
-        cout << n->id << "-" << n->val << "\t";
+        cout << n->id << "-" << n->val << "  ";
         MidOrder(n->right);
     }
 }
 
+void print(Node r)
+{
+    if (r == NULL)
+    {
+        printf("null\n");
+        return;
+    }
+    printf("%d\n",r->id);
+    printf("left ");
+    print(r->left);
+    printf("right ");
+    print(r->right);
+}
+
+/*int main()
+{
+    int a, b;
+    while(cin >> a >> b)
+    {
+        insert(a, b);
+        print(root);
+    }
+}*/
+
 int main()
 {
-    int id, val;
-    while(cin >> id >> val)
+    int a, b, d;
+    char ch;
+    insert(MIN, 0);
+    insert(MAX, 0);
+    int n;
+    cin >> n;
+    while(n--)
     {
-        insert(id, val);
-        MidOrder(root);
-        cout << endl;
+        print(root);
+        cin >> ch >> a >> b;
+        if(ch == 'I')
+        {
+            insert(a, b);
+        }
+        else if(ch == 'Q')
+        {
+            query(a, b);
+        }
+        else if(ch == 'D')
+        {
+            del(a, b);
+        }
+        else
+        {
+            cin >> d;
+            modify(a, b, d);
+        }
+        //MidOrder(root);
+        //cout << endl;
     }
     return 0;
 }

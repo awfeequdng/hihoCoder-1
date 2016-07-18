@@ -3,7 +3,7 @@
 using namespace std;
 #define MAXL 1e5+1
 int n;
-int longest;
+int longest = 0;
 vector<int> first, second;
 vector<vector<int>> node(MAXL);
 
@@ -22,8 +22,9 @@ void dfs(int cur, int fa)
             }
             else if(first[node[cur][i]]+1 > second[cur])
             {
-                second[cur] = first[node[cur][i]];
+                second[cur] = first[node[cur][i]] + 1;
             }
+            cout << first[node[cur][i]] << endl;
         }
     }
     if(first[cur] + second[cur] > longest)

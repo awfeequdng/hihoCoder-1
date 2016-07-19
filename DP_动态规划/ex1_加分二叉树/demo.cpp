@@ -23,13 +23,11 @@ void solve()
         m[i][i] = score[i];
         root[i][i] = i;
     }
-    show();
     for(int i = 1; i < n; i++)
     {
         m[i][i+1] = score[i] + score[i+1];
         root[i][i+1] = i;
     }
-    show();
     for(int d = 2; d < n; ++d)
     {
         for(int i = 1; i <= n-d; ++i)
@@ -37,7 +35,7 @@ void solve()
             int temp;
             m[i][i+d] = m[i][i] + m[i+1][i+d];
             root[i][i+d] = i;
-            for(int j = i+1; j < i+d; ++j)
+            for(int j = i+1; j <= i+d; ++j)
             {
                 temp = m[i][j-1] * m[j+1][i+d] + m[j][j];
                 if(temp > m[i][i+d])
@@ -75,6 +73,7 @@ int main()
     }
     solve();
     cout << m[1][n] << endl;
+    preOrder(1, n);
     cout << endl;
     return 0;
 }

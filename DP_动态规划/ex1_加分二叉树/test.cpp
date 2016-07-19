@@ -42,6 +42,17 @@ void DP()
     }
 }
 
+void preOrder(int x, int y)
+{
+    if(x <= y)
+    {
+        cout << root[x][y] << " ";
+        preOrder(x, root[x][y] - 1);
+        preOrder(root[x][y] +1, y);
+    }
+}
+
+
 int main()
 {
     cin >> n;
@@ -51,4 +62,7 @@ int main()
     }
     DP();
     cout << dp[1][n] << endl;
+    preOrder(1, n);
+    cout << endl;
+    return 0;
 }

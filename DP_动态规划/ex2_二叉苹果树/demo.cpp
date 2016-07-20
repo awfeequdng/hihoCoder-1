@@ -25,7 +25,7 @@ int dfs(int cur, int fa)
         for(int j = tot[cur]; j>1; --j)
         {
             for(int k = 1; (k<j)&&(k<=tot[Child]); ++k)
-                res[cur][j] = max(res[cur][j], res[cur][j-k] + res[Child][k] + Value);
+                res[cur][j] = max(res[cur][j], res[cur][j-k] + res[Child][k] + Value);//此前的res[cur][j]并不包含Child子树中的结点
         }
     }
     return tot[cur];

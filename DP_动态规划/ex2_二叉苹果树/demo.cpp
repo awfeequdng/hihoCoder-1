@@ -16,6 +16,18 @@ int dfs(int cur, int fa)
             continue;
         tot[cur] += dfs(Child, cur);
     }
+    for(int i = 0; i < tree[cur].size(); ++i)
+    {
+        int Child = tree[cur][i].first;
+        int Value = tree[cur][i].second;
+        if(Child == fa)
+            continue;
+        for(int j = tot[cur]; j>1; --j)
+        {
+            for(int k = 1; (k<j)&&(k<=tot[Child]); ++k)
+                res[cur][j] = max(res[cur][j], res[cur][j-k] + res[Child][k] + Value);
+        }
+    }
     return tot[cur];
 }
 
@@ -30,6 +42,7 @@ int main()
         tree[b].push_back(make_pair(a, v));
     }
     dfs(1, -1);
+    cout << res[1][q+1] << endl;
     for(int i = 1; i <= n; ++i)
         cout << tot[i] << " ";
     cout << endl;

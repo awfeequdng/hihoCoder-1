@@ -25,8 +25,16 @@ int main()
     while(n--)
     {
         cin >> oper >> s1 >> s2;
+        it1 = str.find(s1);
+        it2 = str.find(s2);
         if(oper)
         {
+            //因为可能询问从来没有出现的名字，所以需要提前进行判断，以防出现段错误
+            if(it1 == str.end() || it2 == str.end())
+            {
+                cout << "no" << endl;
+                continue;
+            }
             string rep_s1 = find_represent(s1);
             string rep_s2 = find_represent(s2);
             if(rep_s1 == rep_s2)
@@ -36,8 +44,6 @@ int main()
         }
         else
         {
-            it1 = str.find(s1);
-            it2 = str.find(s2);
             if(it1 == str.end())
             {
                 it1 = str.insert(make_pair(s1, s1)).first; //map.insert的返回值是pair<iterator, bool>，其中bool变量用于指示是否插入成功

@@ -22,7 +22,7 @@ int dfs(int cur, int fa)
     {
         if(tree[cur][i] == fa)
             continue;
-        for(int j = p; j > 1; --j)
+        for(int j = p; j > 1; --j) //这个从大到小是精髓，保证了子树遍历不重复
         {
             for(int k = 1; k < j && k <= num[tree[cur][i]]; ++k)
             {

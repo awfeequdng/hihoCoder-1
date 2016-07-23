@@ -10,7 +10,7 @@ typedef struct node
     string name;
     node* father;
     int color;
-    vector<node *> child;
+    vector<node*> child;
     node(string name_) : name(name_)
     {
         father = NULL;
@@ -45,7 +45,7 @@ void dfs(Node p)
         int id = pChild[i].second;
         if(pQuery->color == 0)
             continue;
-        res[id] = findRoot(p)->name;
+        res[id] = findRoot(pQuery)->name;
     }
 
     for(int i = 0; i < p->child.size(); ++i)

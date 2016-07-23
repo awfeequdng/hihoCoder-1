@@ -16,7 +16,7 @@ typedef struct node
         father = NULL;
         color = 0;
     }
-}Node;
+}*Node;
 
 string res[N];
 map<string, Node> tree;
@@ -38,14 +38,14 @@ Node findRoot(Node p)
 void dfs(Node p)
 {
     p->color = 1;
-    vector<Node> pChild = query[p->name];
+    vector<NodeNum> &pChild = query[p->name];
     for(int i = 0; i < pChild.size(); ++i)
     {
         Node pQuery = pChild[i].first;
         int id = pChild[i].second;
         if(pQuery->color == 0)
             continue;
-        result[id] = findRoot(pChild)->name;
+        res[id] = findRoot(p)->name;
     }
 
     for(int i = 0; i < p->child.size(); ++i)

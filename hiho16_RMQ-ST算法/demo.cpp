@@ -21,9 +21,12 @@ void build()
 {
     for(int i = 0; i < n; ++i)
         res[i][1] = price[i];
-    for(int i = 1; i < 20; ++i)
+    for(int i = 0; i < n; ++i)
     {
-
+        for(int j = 1; j <= getIndex(n-1); ++j)
+        {
+            res[i][j] = (res[i][j-1] < res[i+block[j-1]][j-1]) ? res[i][j-1] : res[i+block[j-1]][j-1];
+        }
     }
 }
 
@@ -40,4 +43,14 @@ int main()
     {
         cin >> price[i];
     }
+    build();
+    for(int i = 0; i < n; ++i)
+    {
+        for(int j = 0; j <= getIndex(n-1); ++j)
+        {
+            cout << res[i][j] << " ";
+        }
+        cout << endl;
+    }
+    return 0;
 }

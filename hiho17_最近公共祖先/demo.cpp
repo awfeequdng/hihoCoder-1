@@ -27,7 +27,6 @@ map<string, Node> tree;
 map<string, int> seq;
 map<int, string> seq2;
 vector<pair<int, int>> dp[19];
-int df[2 * N][19];
 
 void dfs(Node p, int d)
 {

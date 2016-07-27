@@ -34,9 +34,10 @@ void dfs(Node p, int d)
     p->depth = d;
     p->id = num++;
 
-    seq[p->name] = cnt;
-    seq2[cnt] = p->name;
-    dp[0].push_back(make_pair(p->depth, cnt++));
+    seq[p->name] = p->id;
+    seq2[p->id] = p->name;
+    dp[0].push_back(make_pair(p->depth, p->id));
+    cout << p->name << endl;
 
     for(int i = 0; i < p->child.size(); ++i)
     {
@@ -44,20 +45,17 @@ void dfs(Node p, int d)
     }
 
     if(p->father)
-    {
-        seq[p->father->name] = cnt;
-        seq2[cnt] = p->father->name;
-        dp[0].push_back(make_pair(p->father->depth, cnt++));
-    }
+        dp[0].push_back(make_pair(p->father->depth, p->father->id));
+    if(p->father)
+        cout << p->father->name << endl;
 }
 
 void st()
 {
-    //因为是n行，对应n+1个结点，所以是2 × n + 1
-    int k = log2(2 * n + 1);
+    int k = log2(n);
     for(int i = 1; i <= k; ++i)
     {
-        for(int j = 0; j + (1<<i) - 1 < 2 * n + 1; ++j)
+        for(int j = 0; j + (1<<i) - 1 < 2 * n - 1; ++j)
         {
             int next = j + (1<<(i-1));
             if(dp[i-1][j].first < dp[i-1][next].first)
@@ -87,14 +85,6 @@ int main()
 
     dfs(root, 0);
     st();
-
-    /*for(int i = 0; i <= log2(n * 2 + 1); ++i)
-    {
-        for(const auto x : dp[i])
-        {
-            cout << x.first << " " << x.second << endl;
-        }
-    }*/
     cin >> m;
     while(m--)
     {

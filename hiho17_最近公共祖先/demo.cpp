@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <map>
 #define N 100010
 using namespace std;
@@ -19,12 +20,13 @@ typedef struct node
 }*Node;
 
 int n, m;
-int count = 0;
+int cnt = 0;
 int num = 0;
 Node root = NULL;
 map<string, Node> tree;
 map<string, int> seq;
-vector<pair<int, int>> df[19];
+map<int, string> seq2;
+vector<pair<int, int>> dp[19];
 int df[2 * N][19];
 
 void dfs(Node p, int d)
@@ -32,8 +34,9 @@ void dfs(Node p, int d)
     p->depth = d;
     p->id = num++;
 
-    seq[p->name] = count;
-    df[0].push_back(make_pair(p->depth, count++));
+    seq[p->name] = cnt;
+    seq2[cnt] = p->name;
+    dp[0].push_back(make_pair(p->depth, cnt++));
 
     for(int i = 0; i < p->child.size(); ++i)
     {
@@ -41,7 +44,7 @@ void dfs(Node p, int d)
     }
 
     if(p->father)
-        df[0].push_back(make_pair(p->father->depth, count++));
+        dp[0].push_back(make_pair(p->father->depth, cnt++));
 }
 
 void st()
@@ -76,4 +79,22 @@ int main()
         if(i == 0)
             root = tree[s1];
     }
+
+    dfs(root, 0);
+    st();
+    cin >> m;
+    while(m--)
+    {
+        cin >> s1 >> s2;
+        int l, r, res;
+        l = seq[s1];
+        r = seq[s2];
+        int k = log2(r - l + 1);
+        if(dp[k][l].first < dp[k][r - (1<<k) + 1].first)
+            res = dp[k][l].second;
+        else
+            res = dp[k][r - (1<<k) + 1].second;
+        cout << seq2[res] << endl;
+    }
+    return 0;
 }

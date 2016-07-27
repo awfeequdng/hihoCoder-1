@@ -99,9 +99,11 @@ int main()
     while(m--)
     {
         cin >> s1 >> s2;
-        int l, r, res;
+        int l, r, res, temp;
         l = seq[s1];
         r = seq[s2];
+        if(l > r)  //这里需要判断输入的字符串的顺序
+            swap(l, r);
         int k = log2(r - l + 1);
         if(dp[k][l].first < dp[k][r - (1<<k) + 1].first)
             res = dp[k][l].second;

@@ -71,6 +71,7 @@ int query(Node p, int l, int r)
         else if(r == p->right)
             return p->value;
     }
+    //这里条件需要写作p->left < l && l <= mid，如果写作p->left < l <= mid则会出错
     else if(p->left < l && l <= mid)
     {
         if(r <= mid)

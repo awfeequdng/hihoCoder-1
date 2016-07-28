@@ -40,7 +40,7 @@ int main()
 
             for(int j = 1; j <= log2(n); ++j)
             {
-                for(int i = a; i - (1<<j) + 1 > 0; --i)
+                for(int i = a; a - i < (1<<j) && i > 0; --i)
                 {
                     if(i + (1<<j) - 1 <= n)
                         weight[i][j] = min(b, weight[i][j]);

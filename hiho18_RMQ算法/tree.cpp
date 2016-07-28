@@ -1,5 +1,6 @@
 //二分线段树
 #include <iostream>
+#include <map>
 #define N 10010
 using namespace std;
 
@@ -23,6 +24,7 @@ typedef struct node
 
 int n, m;
 int weight[N];
+map<int, Node> findNode;
 Node root;
 
 void build(Node p)
@@ -43,6 +45,7 @@ void dfs(Node p)
     if(p->left == p->right)
     {
         p->value = weight[p->left];
+        findNode[p->left] = p;
         return;
     }
     dfs(p->lchild);
@@ -52,9 +55,9 @@ void dfs(Node p)
 
 int query(Node p, int l, int r)
 {
+    int mid = p->lchild->right;
     if(l < p->left || r > p->right)
         return -1;
-    int mid = p->lchild->right;
     if(l == r)
         return weight[l];
     if(l == p->left)
@@ -87,6 +90,13 @@ int query(Node p, int l, int r)
     return -1;
 }
 
+void modify(Node p)
+{
+    p->value = min(p->lchild->value, p->rchild->value);
+    if(p->father)
+        modify(p->father);
+}
+
 int main()
 {
     cin >> n;
@@ -98,12 +108,21 @@ int main()
     dfs(root);
 
 
-    int a, b;
+    int a, b, oper;
     cin >> m;
     while(m--)
     {
-        cin >> a >> b;
-        cout << query(root, a, b) << endl;
+        cin >> oper >> a >> b;
+        if(oper == 0)
+        {
+            cout << query(root, a, b) << endl;
+        }
+        else
+        {
+            weight[a] = b;
+            findNode[a]->value = b;
+            modify(findNode[a]->father);
+        }
     }
     return 0;
 }

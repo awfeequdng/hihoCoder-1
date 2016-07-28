@@ -63,16 +63,16 @@ int query(Node p, int l, int r)
             return query(p->lchild, l, r);
         else if(r == mid)
             return p->lchild->value;
-        else if(mid < r < p->right)
+        else if(mid < r && r < p->right)
             return min(p->lchild->value, query(p->rchild, mid+1, r));
         else if(r == p->right)
             return p->value;
     }
-    else if(p->left < l <= mid)
+    else if(p->left < l && l <= mid)
     {
         if(r <= mid)
             return query(p->lchild, l, r);
-        else if(mid < r < p->right)
+        else if(mid < r && r < p->right)
             return min(query(p->lchild, l, mid), query(p->rchild, mid+1, r));
         else if(r == p->right)
             return min(query(p->lchild, l, mid), p->rchild->value);
@@ -96,6 +96,7 @@ int main()
     root = new node(1, n);
     build(root);
     dfs(root);
+
 
     int a, b;
     cin >> m;

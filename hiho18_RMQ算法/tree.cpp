@@ -55,6 +55,19 @@ void dfs(Node p)
 
 int query(Node p, int l, int r)
 {
+    if(l <= p->left && r >= p->right)
+        return p->value;
+    int mid = (p->left + p->right) / 2;
+    if(r <= mid)
+        return query(p->lchild, l, r);
+    else if( l > mid)
+        return query(p->rchild, l, r);
+    else
+        return min(query(p->lchild, l, mid), query(p->rchild, mid+1, r));
+}
+/*
+int query(Node p, int l, int r)
+{
     int mid = p->lchild->right;
     if(l < p->left || r > p->right)
         return -1;
@@ -89,7 +102,7 @@ int query(Node p, int l, int r)
             return query(p->rchild, l, r);
     }
     return -1;
-}
+}*/
 
 void modify(Node p)
 {

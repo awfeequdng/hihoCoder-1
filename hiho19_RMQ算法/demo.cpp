@@ -24,7 +24,7 @@ typedef struct node
 
 int n, m;
 int weight[N];
-map<int, Node> findNode;
+Node findNode[N];
 Node root;
 
 void build(Node p)

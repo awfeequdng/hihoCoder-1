@@ -37,7 +37,7 @@ void build(Node p)
         build(p->rchild);
     }
 
-    p->num += p->lchild->num + p->rchild->num;
+    p->num = p->lchild->num + p->rchild->num;
     p->sum = p->lchild->sum + p->rchild->sum;
 }
 
@@ -70,9 +70,10 @@ int query(Node p, int l, int r)
 void modify(Node p, int l, int r, int delta)
 {
     int mid = (p->left + p->right) / 2;
+
     if(l <= p->left && r >= p->right)
     {
-        p->lazy == delta;
+        p->lazy = delta;
         p->sum = p->num * p->lazy;
     }
     else
@@ -80,10 +81,10 @@ void modify(Node p, int l, int r, int delta)
         if(p->lazy != -1)
         {
             p->lchild->lazy = p->lazy;
-            p->lchild->sum = p->lchild->lazy * p->lchild->num;
+            p->lchild->sum = p->lazy * p->lchild->num;
 
             p->rchild->lazy = p->lazy;
-            p->rchild->sum = p->rchild->lazy * p->rchild->num;
+            p->rchild->sum = p->lazy * p->rchild->num;
 
             p->lazy = -1;
         }

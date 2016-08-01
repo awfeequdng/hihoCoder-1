@@ -1,9 +1,9 @@
 #include <iostream>
-#include <vector>
+#include <map>
 #define N 100010
 using namespace std;
 int n, len;
-vector<pair<int, int>> vec;
+map<int, int> query;
 
 typedef struct node
 {
@@ -69,7 +69,7 @@ int main()
     for(int i = 0; i < n; ++i)
     {
         cin >> left >> right;
-        vec.push_back(make_pair(left, right));
+        query.insert(make_pair(left, right));
         insert(root, left);
         insert(root, right);
     }

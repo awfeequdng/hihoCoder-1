@@ -20,12 +20,9 @@ int main()
         iter = r;
         iter--;
         int p = iter->second;
-        cout << endl;
-        cout << "n " << n << endl;
         for(i = l; i != r;)
         {
-            cout << i->first << " ";
-            num.erase(i++);
+            i = num.erase(i);
         }
         num[a] = n;
         num[b] = p;

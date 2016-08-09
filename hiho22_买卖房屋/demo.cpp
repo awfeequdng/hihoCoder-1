@@ -93,18 +93,14 @@ void makeSet(Node p, int l, int r, int s)
     {
         if(r <= mid)
         {
-            update(p->lchild);
             makeSet(p->lchild, l, r, s);
         }
         else if(l > mid)
         {
-            update(p->rchild);
             makeSet(p->rchild, l, r, s);
         }
         else
         {
-            update(p->lchild);
-            update(p->rchild);
             makeSet(p->lchild, l, mid, s);
             makeSet(p->rchild, mid+1, r, s);
         }
@@ -114,30 +110,25 @@ void makeSet(Node p, int l, int r, int s)
 
 void makeAdd(Node p, int l, int r, int d)
 {
+    update(p);
     int mid = (p->left + p->right) / 2;
     if(l <= p->left && r >= p->right)
     {
-        update(p);
         p->add = d;
         p->value += d * (p->right - p->left + 1);
     }
     else
     {
-        update(p);
         if(r <= mid)
         {
-            update(p->lchild);
             makeAdd(p->lchild, l, r, d);
         }
         else if(l > mid)
         {
-            update(p->rchild);
             makeAdd(p->rchild, l, r, d);
         }
         else
         {
-            update(p->rchild);
-            update(p->lchild);
             makeAdd(p->lchild, l, mid, d);
             makeAdd(p->rchild, mid+1, r, d);
         }
@@ -149,11 +140,11 @@ int main()
 {
     int n, m;
     cin >> n >> m;
-    for(int i = 1; i <= n; ++i)
+    for(int i = 0; i <= n; ++i)
     {
         cin >> price[i];
     }
-    root = new node(1, n);
+    root = new node(0, n);
     build(root);
 
     int oper, l, r, d;

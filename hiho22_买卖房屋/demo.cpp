@@ -36,7 +36,7 @@ void build(Node p)
     }
 }
 
-void update(Node p)
+/*void update(Node p)
 {
     if(p->left != p->right)
     {
@@ -49,7 +49,7 @@ void update(Node p)
             p->lchild->value = p->set * (p->lchild->right - p->rchild->left + 1);
             p->rchild->value = p->set * (p->rchild->right - p->lchild->left + 1);
 
-            p->add = 0;
+            //p->add = 0;
             p->set = -1;
         }
 
@@ -77,6 +77,28 @@ void update(Node p)
             p->value += p->add;
             p->add = 0;
         }
+   }
+}*/
+void update(Node p)
+{
+    if(p->left != p->right)
+    {
+        if(p->set != -1)
+        {
+            p->value = (p->right - p->left + 1) * p->set;
+            p->lchild->set = p->set;
+            p->rchild->set = p->set;
+            p->lchild->add = 0;
+            p->rchild->add = 0;
+            p->set = -1;
+        }
+        if(p->add != 0)
+        {
+            p->value += p->add * (p->right - p->left + 1);
+            p->lchild->add += p->add;
+            p->rchild->add += p->add;
+            p->add = 0;
+        }
     }
 }
 
@@ -86,7 +108,14 @@ void makeSet(Node p, int l, int r, int s)
     int mid = (p->left + p->right) / 2;
     if(l <= p->left && r >= p->right)
     {
-        p->set = s;
+        p->add = 0;
+        if(p->left != p->right)
+        {
+            update(p->lchild);
+            update(p->rchild);
+            p->lchild->set = s;
+            p->rchild->set = s;
+        }
         p->value = s * (p->right - p->left + 1);
     }
     else
@@ -114,7 +143,13 @@ void makeAdd(Node p, int l, int r, int d)
     int mid = (p->left + p->right) / 2;
     if(l <= p->left && r >= p->right)
     {
-        p->add = d;
+        if(p->left != p->right)
+        {
+            update(p->lchild);
+            update(p->rchild);
+            p->lchild->add += d;
+            p->rchild->add += d;
+        }
         p->value += d * (p->right - p->left + 1);
     }
     else

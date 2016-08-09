@@ -57,9 +57,9 @@ void pushDown(Node p)
     {
         if(p->lchild)
         {
-            p->lchild->add = p->add;
+            p->lchild->add += p->add;
             p->lchild->value += p->add * (p->lchild->right - p->lchild->left + 1);
-            p->rchild->add = p->add;
+            p->rchild->add += p->add;
             p->rchild->value += p->add * (p->rchild->right - p->rchild->left + 1);
         }
         p->add = 0;
@@ -72,7 +72,7 @@ void modify(Node p, int l, int r, int d, int type)
     {
         if(type == 0)
         {
-            p->add = d;
+            p->add += d;
             p->value += d * (r - l + 1);
         }
         else

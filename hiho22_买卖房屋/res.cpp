@@ -20,6 +20,7 @@ void build(Node p)
     if(p->left == p->right)
     {
         p->value = price[p->left];
+        return;
     }
     else
     {

@@ -47,8 +47,5 @@ int main()
         que.pop();
     }
     cout << state[t] << endl;
-    for(int i = 1; i <= n; ++i)
-        cout << state[i] << " ";
-    cout << endl;
     return 0;
 }

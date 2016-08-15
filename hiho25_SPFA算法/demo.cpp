@@ -30,11 +30,21 @@ int main()
                 if(state[que.front()] + x.second < state[x.first])
                 {
                     state[x.first] = state[que.front()] + x.second;
-                    que.push(que.front());
+                    if(source[x.first])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        que.push(x.first);
+                        source[x.first] = true;
+                    }
                 }
             }
         }
+        source[que.front()] = false;
         que.pop();
     }
+    cout << state[t] << endl;
     return 0;
 }

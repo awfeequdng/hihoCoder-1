@@ -18,6 +18,7 @@ int main()
     {
         cin >> from >> to >> length;
         len[from].push_back(make_pair(to, length));
+        len[to].push_back(make_pair(from, length));
     }
     state[s] = 0;
     que.push(s);
@@ -25,7 +26,7 @@ int main()
     {
         for(const auto x : len[que.front()])
         {
-            if(state[que.front()] != -1)
+            if(state[que.front()] != (unsigned)-1)
             {
                 if(state[que.front()] + x.second < state[x.first])
                 {
@@ -46,5 +47,8 @@ int main()
         que.pop();
     }
     cout << state[t] << endl;
+    for(int i = 1; i <= n; ++i)
+        cout << state[i] << " ";
+    cout << endl;
     return 0;
 }

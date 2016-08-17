@@ -74,9 +74,6 @@ int main()
             rep[to] = findRep(from);
         else
             rep[from] = findRep(to);
-        for(int i = 1; i <= n; ++i)
-            cout << rep[i] << " ";
-        cout << endl;
         res += min;
     }
     printf("%d\n", res);
